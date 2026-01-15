@@ -1,0 +1,66 @@
+:root {
+  --primary-color: #00ff9d;
+  --primary-color-dark: #008d55;
+  --secondary-color: #333;
+  --text-color: #333;
+  --background-color: #f4f4f4;
+  --mobile-breakpoint: 768px;
+}
+
+/* Desktop Settings */
+@media (min-width: 768px) {
+  /* Header */
+  #top-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: var(--primary-color) solid 4px;
+  }
+
+  #top-header .siteName {
+    font-size: 2em;
+    padding: 1.5rem;
+    text-decoration: none;
+  }
+
+  #tools a {
+    font-size: 1.5em;
+  }
+
+  /* Navigation */
+  nav ul li{
+    font-size: 16px;
+  }
+
+  /* Main Content */
+  body #Wrapper {
+    border: solid 6px var(--primary-color);
+    border-radius: 16px;
+    margin: 1rem auto;
+    width: 80%;
+    max-width: 1080px;
+  }
+
+  .hero-textbox {
+    left: 20%;
+    top: 30%;
+    width: auto;
+    font-size: 1rem;
+  }
+
+  .hero-textbox h2 {
+    font-size: 2rem;
+  }
+
+  .vehicle-information h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.4em;
+  }
+
+  #vehicle-upgrade-wrapper {
+    grid-row: 1 / span 2;
+  }
+
+  .vehicle-reviews li {
+    font-size: 1.2em;
+  }
+}

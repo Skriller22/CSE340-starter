@@ -1,0 +1,220 @@
+:root {
+  --primary-color: #00ff9d;
+  --primary-color-dark: #008d55;
+  --secondary-color: #333;
+  --text-color: #333;
+  --background-color: #f4f4f4;
+  --mobile-breakpoint: 768px;
+}
+
+
+/******* Change Box Model ***************/
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+/********** Header Styles **********/
+#top-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: var(--primary-color) solid 4px;
+}
+
+#top-header .siteName {
+  font-size: 3em;
+  font-weight: bold;
+  padding: 2rem 1rem;
+  text-decoration: none;
+}
+
+#top-header .siteName a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+#tools {
+  align-self: center;
+  padding: 0.5rem;
+}
+
+#tools a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: bold;
+  font-size: 1.8em;
+}
+
+/********** Navigation Styles **********/
+nav {
+  background-color: #333;
+  color: white;
+}
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-around;
+}
+
+nav ul li {
+  width: 100%;
+  text-align: center;
+  padding: 14px 16px;
+  cursor: pointer;
+  font-size: 26px;
+}
+
+nav ul li:hover {
+  background-color: #575757;
+}
+
+/********** Main Styles **********/
+main {
+  flex: 1;
+  padding: 0 1rem;
+}
+
+/********** Body Styles **********/
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: url('../images/site/checkerboard.jpg') ;
+}
+
+body #Wrapper {
+  width: 100%;
+  margin: 0 auto;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hero Styles */
+.hero {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.hero img {
+  width: 100%;
+  height: auto;
+}
+.hero-textbox {
+  position: absolute;
+  top: 35%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+  color: var(--primary-color-dark);
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 1rem 1rem 2rem 1rem;  
+  border-radius: 8px;
+}
+
+.hero-textbox h2 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.hero-textbox ul {
+  padding: 0;
+  list-style-type: none;
+  text-align: left;
+  margin: 0 0 2rem 0;
+}
+
+.hero-textbox ul li {
+  margin: 0.5rem 0 0;
+  font-size: 1.2rem;
+}
+
+.hero-textbox ul li::before {
+  content: "✔ ";
+  color: var(--primary-color-dark);
+}
+
+.hero-textbox a {
+  margin: 1rem;
+  padding: 1rem;
+  font-size: 2rem;
+  color: white;
+  background-color: var(--primary-color-dark);
+  text-decoration: none;
+}
+
+/* vehicle-information */
+
+.vehicle-information {
+  margin: 3rem 0 1rem 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.vehicle-information h3 {
+  margin: 0 0 1rem 0;
+  font-size: 2.5em;
+}
+
+#vehicle-upgrade-wrapper {
+  grid-row: 2 / span 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr 1fr;
+  gap: 1rem;
+  text-align: center;
+}
+
+#vehicle-upgrade-wrapper h3 {
+  grid-column: 1 / -1;
+  text-align: left;
+}
+
+.vehicle-upgrade {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-height: 100px;
+}
+
+.vehicle-upgrade img {
+  background-color: var(--primary-color-dark);
+  border-radius: 8px;
+  padding: 0.5rem;
+  max-width: 100px;
+  height: auto;
+}
+
+#vehicle-review-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.vehicle-reviews {
+  margin-top: 1rem;
+  padding: 0;
+}
+
+.vehicle-reviews li {
+  margin: 0 0 1rem 1.2rem;
+  padding: 0 0 1rem 0;
+  font-size: 1.5em;
+}
+
+/********** Footer Styles **********/
+footer {
+  background-color: #333;
+  color: white;
+  padding: 0 5%;
+  border-top: var(--primary-color) solid 4px;
+}
