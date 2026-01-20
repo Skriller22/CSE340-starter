@@ -8,12 +8,10 @@
             },
             "ssh": "Disabled",
             "previewLimit": 50,
-            "server": "postgresql://cse340mjr:OjEeWuATlCQrbEPgPUuwj2KbJvvIs0hF@dpg-d5lvc4e3jp1c739ot6g0-a.oregon-postgres.render.com/cse340mjr3",
+            "server": "localhost",
             "driver": "PostgreSQL",
             "name": "Render.com",
-            "database": "cse340mjr3",
-            "username": "cse340mjr",
-            "connectString": "postgresql://cse340mjr:OjEeWuATlCQrbEPgPUuwj2KbJvvIs0hF@dpg-d5lvc4e3jp1c739ot6g0-a.oregon-postgres.render.com/cse340mjr3"
+            "connectString": "postgresql://cse340mjr:43zek2z3DS5s9BZ9gi1JOF8bWuGHy3fS@dpg-d5ndmfumcj7s73ckcj90-a.oregon-postgres.render.com/cse340mjr_whu3"
         }
     ]
 }
