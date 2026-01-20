@@ -2,6 +2,12 @@
 -- Name: cse340mjr
 -- DB name: cse340mjr
 -- Hosted by render.com
+-- Delete all data from tables before recreating them
+DROP TABLE IF EXISTS public.inventory CASCADE;
+DROP TABLE IF EXISTS public.account CASCADE;
+DROP TABLE IF EXISTS public.classification CASCADE;
+DROP TYPE IF EXISTS public.account_type CASCADE;
+
 CREATE TYPE public.account_type AS ENUM ('Client', 'Employee', 'Admin');
 ALTER TYPE public.account_type OWNER TO cse340mjr;
 CREATE TABLE public.classification (
@@ -249,6 +255,9 @@ FROM public.inventory AS i
     INNER JOIN public.classification AS c ON i.classification_id = c.classification_id
 WHERE c.classification_name = 'Sport';
 --Update inventory paths to use "/vehicles"
+--Update image and thumbnail paths for all vehicles
 UPDATE public.inventory
 SET inv_image = REPLACE(inv_image, '/images/', '/images/vehicles/'),
-    inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/');
+    inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/')
+WHERE inv_image NOT LIKE '%/vehicles/%'
+  AND inv_thumbnail NOT LIKE '%/vehicles/%';

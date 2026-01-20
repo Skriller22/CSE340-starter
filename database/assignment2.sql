@@ -9,7 +9,7 @@ INSERT INTO public.account (
         'Tony',
         'Stark',
         'tony@starkent.com',
-        'Iam1ronm@n',
+        'Iam1ronm@n'
     );
 --Select all admin accounts -- Use to verify accounts before and after update
 SELECT * FROM public.account
@@ -33,11 +33,13 @@ FROM public.inventory AS i
 INNER JOIN public.classification AS c
 ON i.classification_id = c.classification_id
 WHERE c.classification_name = 'Sport';
---Update inventory paths to use "/vehicles"
+--Update image and thumbnail paths for all vehicles
 UPDATE public.inventory
 SET inv_image = REPLACE(inv_image, '/images/', '/images/vehicles/'),
-    inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/');
---Veridy path and description updates
+    inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/')
+WHERE inv_image NOT LIKE '%/vehicles/%'
+  AND inv_thumbnail NOT LIKE '%/vehicles/%';
+--Verify path and description updates
 SELECT inv_make, inv_model, inv_image, inv_thumbnail, inv_description
 FROM public.inventory
 WHERE inv_make IN ('GM', 'Chevrolet');
