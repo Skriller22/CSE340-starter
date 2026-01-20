@@ -1,9 +1,9 @@
 :root {
-  --primary-color: #00ff9d;
-  --primary-color-dark: #008d55;
+  --primary-color: #006eff;
+  --primary-color-dark: #0a3ba5;
   --secondary-color: #333;
   --text-color: #333;
-  --background-color: #f4f4f4;
+  --background-color: #fff4ec;
   --mobile-breakpoint: 768px;
 }
 
@@ -20,6 +20,7 @@
   display: flex;
   justify-content: space-between;
   border-bottom: var(--primary-color) solid 4px;
+  background-color: var(--background-color);
 }
 
 #top-header .siteName {
@@ -66,6 +67,12 @@ nav ul li {
   padding: 14px 16px;
   cursor: pointer;
   font-size: 26px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  display: block;
 }
 
 nav ul li:hover {
@@ -150,6 +157,60 @@ body #Wrapper {
   text-decoration: none;
 }
 
+/* Vehicle Inventory Pages */
+#inv-display {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin: 2rem 1rem;
+  padding: 0;
+}
+
+#inv-display li {
+  list-style-type: none;
+  border: 2px solid var(--primary-color-dark);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#inv-display img, #inv-display li a {
+  width: 100%;
+  height: auto;
+  border-radius:6.5px 6.5px 0 0;
+}
+
+#inv-display li a {
+  border-bottom: 1px solid var(--primary-color-dark);
+  background-color: var(--primary-color-dark);
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 1.5em;
+}
+
+#inv-display .name-price a {
+  background-color: white;
+  min-width: 100%;
+}
+
+#inv-display .name-price {
+  font-size: 1em;
+  width: 100%;
+  padding: 0 0 1rem 1rem;
+}
+
+#inv-display .name-price h2 {
+  width: 100%;
+}
+
+#inv-display .name-price span {
+  font-weight: bold;
+  font-size: 1.4em;
+  color: var(--primary-color-dark);
+  margin: 0 1rem 1rem 0;
+}
+  
 /* vehicle-information */
 
 .vehicle-information {
