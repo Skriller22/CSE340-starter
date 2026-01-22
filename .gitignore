@@ -12,6 +12,9 @@ node_modules
 # will be manually created by you or dynamically # created on the hosting server
 .env
 
+# launch is used for local debugging in VS Code and not necessary for deployment
+.vscode/launch.json
+
 # .DS_Store is only for Mac users
 **/.DS_Store
 
