@@ -1,6 +1,7 @@
 :root {
   --primary-color: #006eff;
   --primary-color-dark: #0a3ba5;
+  --primary-color-light: #d7e3ff;
   --secondary-color: #333;
   --text-color: #333;
   --background-color: #fff4ec;
@@ -51,38 +52,102 @@
 nav {
   background-color: #333;
   color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  position: relative;
 }
-nav ul {
+
+/* Hamburger Button */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 1rem 0.8rem;
+  gap: 8px;
+}
+
+.hamburger span {
+  width: 40px;
+  height: 5px;
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(10px, 10px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Navigation Menu */
+#nav-menu {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  display: flex;
-  justify-content: space-around;
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #333;
+  width: 100%;
+  z-index: 1000;
 }
 
-nav ul li {
+#nav-menu.active {
+  display: flex;
+}
+
+#nav-menu li {
   width: 100%;
   text-align: center;
   padding: 14px 16px;
   cursor: pointer;
   font-size: 26px;
+  border-bottom: 1px solid #575757;
+  list-style: none;
 }
 
-nav ul li a {
+#nav-menu li a {
   color: white;
   text-decoration: none;
   display: block;
 }
 
-nav ul li:hover {
+#nav-menu li:hover {
   background-color: #575757;
 }
 
 /********** Main Styles **********/
 main {
   flex: 1;
+  padding: 0;
+}
+
+main h1 {
+  text-align: left;
+  padding: 1rem;
+  margin: 0;
+}
+
+#homepage {
   padding: 0 1rem;
+}
+
+#homepage h1 {
+  margin: 1rem 0;
+  padding: 0;
 }
 
 /********** Body Styles **********/
@@ -272,10 +337,100 @@ body #Wrapper {
   font-size: 1.5em;
 }
 
+/* Vehicle details page */
+#detail-view {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+}
+
+#detail-panel {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  padding: 1rem;
+  background-color: var(--primary-color-light);
+  border-bottom: solid 2px var(--secondary-color);
+}
+
+#detail-panel img {
+  max-width: 100%;
+  min-width: 100px;
+  height: auto;
+}
+
+#detail-panel .thumbnails {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+#detail-panel .thumbnails img {
+  width: calc(33.333% - 0.5rem);  /* 3 per row with gap */
+  height: auto;
+  cursor: pointer;
+  object-fit: contain;
+}
+
+#detail-info {
+  margin: 0 2rem;
+}
+
+#detail-info .detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: solid 4px var(--primary-color);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+#detail-info .detail-header h3 {
+  margin: 0;
+  font-size: 2em;
+}
+
+#detail-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+}
+
+#detail-info ul li {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 0;
+  background-color: var(--primary-color-light);
+  border-radius: 0 8px 0 8px;
+  border-left: solid 4px var(--primary-color-dark);
+}
+
+.color-swatch {
+  margin-left: 0.5rem;
+  border: 1px solid #000;
+  margin-right: 8px;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border-radius: 4px;
+}
+
 /********** Footer Styles **********/
 footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #333;
   color: white;
   padding: 0 5%;
   border-top: var(--primary-color) solid 4px;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
 }

@@ -6,7 +6,7 @@ const Util = {}
  ************************** */
 Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications()
-  let list = "<ul>"
+  let list = "<ul id='nav-menu'>"
   list += '<li><a href="/" title="Home page">Home</a></li>'
   data.rows.forEach((row) => {
     list += "<li>"
@@ -53,6 +53,36 @@ Util.buildClassificationGrid = async function (data) {
     grid = '<p class="notice">Sorry, no matching vehicles could be found.</p>'
   }
   return grid
+}
+
+/* *****************************
+  * Build the details view HTML
+  * ************************** */
+Util.buildDetailsView = async function (data) {
+  let detailView = '<div id="detail-view">'
+  detailView += '<div id="detail-panel">'
+  detailView += '<img src="' + data.inv_image + '" alt="Image of ' + data.inv_make + ' ' + data.inv_model + ' on CSE Motors" />'
+  detailView += '<div class="thumbnails">'
+  detailView += '<img src="' + data.inv_thumbnail + '" alt="Thumbnail image of ' + data.inv_make + ' ' + data.inv_model + ' on CSE Motors" />'
+  detailView += '<img src="' + data.inv_thumbnail + '" alt="Thumbnail image of ' + data.inv_make + ' ' + data.inv_model + ' on CSE Motors" />'
+  detailView += '<img src="' + data.inv_thumbnail + '" alt="Thumbnail image of ' + data.inv_make + ' ' + data.inv_model + ' on CSE Motors" />'
+  detailView += '<img src="' + data.inv_thumbnail + '" alt="Thumbnail image of ' + data.inv_make + ' ' + data.inv_model + ' on CSE Motors" />'
+  detailView += '</div>'
+  detailView += '</div>'
+  detailView += '<div id="detail-info">'
+  detailView += '<div class="detail-header">'
+  detailView += '<h2>' + data.inv_make + ' ' + data.inv_model + '</h2>'
+  detailView += '<h3 class="price">$' + new Intl.NumberFormat('en-US').format(data.inv_price) + '</h3>'
+  detailView += '</div>'
+  detailView += '<p>' + data.inv_description + '</p>'
+  detailView += '<ul>'
+  detailView += '<li>Color: ' + data.inv_color + '</li>'
+  detailView += '<li>Year: ' + data.inv_year + '</li>'
+  detailView += '<li>Miles: ' + new Intl.NumberFormat('en-US').format(data.inv_miles) + '</li>'
+  detailView += '</ul>'
+  detailView += '</div>'
+  detailView += '</div>'
+  return detailView
 }
 
 /* ****************************************
