@@ -355,7 +355,7 @@ body #Wrapper {
 
 #detail-panel img {
   max-width: 100%;
-  min-width: 100px;
+  min-width: 10px;
   height: auto;
 }
 
@@ -433,4 +433,29 @@ footer {
 footer a {
   color: white;
   text-decoration: none;
+}
+
+@media (max-width: 340px) {
+  .siteName a {
+    font-size: 1.5rem;
+  }
+
+  #top-header .siteName {
+    margin: 0;
+    padding: 0;
+  }
+
+  #top-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #tools {
+    padding: 1rem;
+  }
+
+  #tools a {
+    font-size: 1.2rem;
+  }
 }
