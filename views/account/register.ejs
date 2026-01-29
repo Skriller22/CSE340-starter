@@ -1,0 +1,29 @@
+<% if (title) { %>
+  <% } else {
+    res.redirect("/")
+  } %>
+
+<h1>Register for an Account</h1>
+<%- messages() %>
+<div class="auth-container" id="register-form">
+  <form action="/account/register" method="post">
+    <label for="account_FirstName">First Name:</label>
+    <input type="text" id="account_FirstName" name="account_Firstname" required>
+  
+    <label for="account_LastName">Last Name:</label>
+    <input type="text" id="account_LastName" name="account_Lastname" required>
+  
+    <label for="account_Email">Email Address:</label>
+    <input type="email" id="account_Email" name="account_Email" required>
+  
+    <label for="account_Password">Password:</label>
+    <input type="password" id="account_Password" name="account_Password" required>
+    <p>Password must be at least 12 characters and contain at least 1 uppercase letter, 1 number, and 1 special character.</p>
+  
+    <button type="submit">Register</button>
+  </form>
+  <div class="auth-text">
+    <p>Already have an account?</p>
+    <p><a href="/account/login">Login here</a></p>
+  </div>
+</div>

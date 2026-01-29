@@ -11,8 +11,36 @@ const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
+const accountController = require("./controllers/accountController")
 const inventoryRoute = require("./routes/inventoryRoute")
 const utilities = require("./utilities/")
+const session = require("express-session")
+const pool = require("./database/")
+const account = require("./routes/accountRoute")
+const bodyParser = require("body-parser")
+
+/* ***********************
+ * Middleware
+ *************************/
+app.use(session({
+  store: new (require('connect-pg-simple')(session))({
+    createTableIfMissing: true,
+    pool,
+  }),
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  name: 'sessionId',
+}))
+
+app.use(require('connect-flash')())
+app.use(function(req, res, next){
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 /* ***********************
   * View Engine and Templates
@@ -30,8 +58,12 @@ app.use(static)
 app.get("/", utilities.handleErrors(baseController.buildHome))
 // Inventory routes
 app.use("/inv", inventoryRoute)
+// Account routes
+app.use("/account", account)
+
 // Error route
 const errorRoute = require("./routes/errorRoute")
+const { name } = require("ejs")
 app.use("/", errorRoute)
 
 // File Not Found Route - must be last route in list

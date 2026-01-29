@@ -1,0 +1,61 @@
+@media (max-width: 420px) {
+  .siteName a {
+    font-size: 1.5rem;
+  }
+
+  #top-header .siteName {
+    margin: 0;
+    padding: 0;
+  }
+
+  #top-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-textbox {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 12px;
+    top: 40%;
+    left: 30%;
+  }
+
+  .hero-textbox h2 {
+    font-size: 1.2rem;
+  }
+
+  .hero-textbox ul {
+    margin: 1rem;
+  }
+
+  .hero-textbox ul li {
+    font-size: 0.8rem;
+    margin-left: 1rem;
+  }
+
+  .hero-textbox a {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    margin: 1rem;
+  }
+
+  #tools {
+    padding: 1rem;
+  }
+
+  #tools a {
+    font-size: 1.2rem;
+  }
+
+  .auth-text p {
+    text-align: center;
+    font-size: 0.8rem;
+  }
+
+  .auth-text p:last-child {
+    font-size: 1.5rem;
+    margin: 0.5rem 0 0 0;
+    padding: 0.5rem 0 1rem 0;
+  }
+}
