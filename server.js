@@ -5,19 +5,22 @@
 /* ***********************
  * Require Statements
  *************************/
+// Packages
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
 const app = express()
+const session = require("express-session")
+const bodyParser = require("body-parser")
+// Routes and Controllers
 const static = require("./routes/static")
+const inventoryRoute = require("./routes/inventoryRoute")
+const account = require("./routes/accountRoute")
 const baseController = require("./controllers/baseController")
 const accountController = require("./controllers/accountController")
-const inventoryRoute = require("./routes/inventoryRoute")
+// Utilities and Database
 const utilities = require("./utilities/")
-const session = require("express-session")
 const pool = require("./database/")
-const account = require("./routes/accountRoute")
-const bodyParser = require("body-parser")
 
 /* ***********************
  * Middleware
