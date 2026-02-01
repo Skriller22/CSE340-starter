@@ -17,13 +17,52 @@
     font-size: 1.5em;
   }
 
+  .notice {
+    max-width: 100%;
+    margin: 0;
+    margin-right: 20%;
+    border-radius: 0;
+
+    transform: none;
+    animation: slideInFromLeft 0s forwards;
+  }
+
+  .notice-success {
+    max-width: 100%;
+    margin: 0;
+    margin-right: 20%;
+    border-radius: 0;
+
+    transform: none;
+    animation: slideInFromLeft 0s forwards;
+  }
+
+  .notice li:first-child {
+    border-radius: 0 16px 0 0;
+  }
+
+  .notice li:nth-child(odd) {
+    border-top: 6px solid #ffbbbb;
+    border-right: 6px solid #ffbbbb;
+  }
+
+  .notice li:nth-child(even) {
+    border-right: 6px solid #ffbbbb;
+  }
+
+  .notice li:last-child {
+    border-radius: 0 0 16px 0;
+    border-bottom: 6px solid #ffbbbb;
+    border-right: 6px solid #ffbbbb;
+  }
+
   /* Navigation */
-/* Hamburger Button - Hidden on Desktop */
+/* Hamburger Button */
   .hamburger {
     display: none !important;
   }
 
-  /* Navigation Menu - Show on Desktop */
+  /* Navigation Menu */
   #nav-menu {
     display: flex !important;
     position: static !important;

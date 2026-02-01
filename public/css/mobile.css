@@ -48,6 +48,60 @@
   font-size: 1.8em;
 }
 
+/********** Error Messages **********/
+@keyframes slideInFromLeft {
+  from { transform: translateX(-110%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.notice {
+  background-color: #ffdddd;
+  border-left: 6px solid #ff0000;
+  color: #333;
+  padding: 0 0 1rem 0;
+  margin: 1rem 0;
+  list-style: none;
+  max-width: 80%;
+  border-radius: 0 8px 8px 0;
+
+  transform: translateX(-110%);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: slideInFromLeft 1s forwards;
+  backface-visibility: hidden;
+}
+
+.notice-success {
+  background-color: #ddffdd;
+  border-left: 6px solid #00aa00;
+  color: #333;
+  padding: 1rem 0 1rem 0.5rem;
+  margin: 1rem 0;
+  list-style: none;
+  max-width: 80%;
+  border-radius: 0 8px 8px 0;
+
+  transform: translateX(-110%);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: slideInFromLeft 1s forwards;
+  backface-visibility: hidden;
+}
+
+.notice li {
+  padding: 1rem 0 0 1rem;
+  margin: 0;
+}
+
+.notice li:nth-child(odd) {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.notice li:nth-child(even) {
+  padding-bottom: 1rem;
+}
+
 /********** Navigation Styles **********/
 nav {
   background-color: #333;
