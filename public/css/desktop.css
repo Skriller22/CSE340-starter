@@ -21,7 +21,7 @@
     max-width: 100%;
     margin: 0;
     margin-right: 20%;
-    border-radius: 0;
+    border-radius: 0 12px 12px 0;
 
     transform: none;
     animation: slideInFromLeft 0s forwards;

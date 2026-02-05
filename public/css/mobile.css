@@ -58,7 +58,7 @@
   background-color: #ffdddd;
   border-left: 6px solid #ff0000;
   color: #333;
-  padding: 1rem 0 1rem 0;
+  padding: 0;
   margin: 1rem 0;
   list-style: none;
   max-width: 80%;
@@ -99,6 +99,14 @@
 }
 
 .notice li:nth-child(even) {
+  padding-bottom: 1rem;
+}
+
+.notice li:first-child {
+  padding-top: 1rem;
+}
+
+.notice li:last-child {
   padding-bottom: 1rem;
 }
 
