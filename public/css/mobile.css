@@ -58,7 +58,7 @@
   background-color: #ffdddd;
   border-left: 6px solid #ff0000;
   color: #333;
-  padding: 0 0 1rem 0;
+  padding: 1rem 0 1rem 0;
   margin: 1rem 0;
   list-style: none;
   max-width: 80%;
@@ -491,8 +491,14 @@ label {
 input, select, textarea {
   padding: 0.5rem;
   font-size: 1em;
-  border: 1px solid #ccc;
+  border: 1px solid #a0a0a0;
   border-radius: 4px;
+}
+
+form select {
+  margin-top: 1rem;
+  background-size: 1rem;
+  padding-right: 2rem;
 }
 
 form button {
@@ -571,4 +577,90 @@ footer {
 footer a {
   color: white;
   text-decoration: none;
+}
+
+
+/************ Additional styles *************/
+
+/* Inventory Management Page */
+.management-view {
+  padding: 0;
+}
+
+.management-links {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  margin: 0;
+  padding: 0 1rem;
+}
+
+.management-links a {
+  padding: 1rem;
+  text-decoration: none;
+  flex: 1;
+  text-align: center;
+  border: 2px solid var(--primary-color-dark);
+  border-radius: 8px;
+  background-color: var(--primary-color-light);
+}
+
+.management-links a:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.inventory-table-wrapper {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+#inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#inventory-table thead {
+  background-color: var(--primary-color-dark);
+  color: white;
+}
+
+#inventory-table th, #inventory-table td {
+  border: 1px solid #ddd;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+#inventory-table tr th {
+  font-weight: bold;
+  border: none;
+}
+
+#inventory-table tr:nth-child(even) {
+  background-color: var(--primary-color-light);
+}
+
+.add-inventory-view {
+  margin: 0 10% 0 2rem;
+  max-width: 100%;
+}
+
+.add-inventory-view form {
+  border: solid 2px var(--primary-color-dark);
+  padding: 0.8rem;
+  margin: 0.5rem;
+  border-radius: 8px;
+}
+
+.add-classification-view {
+  margin: 0 auto;
+  width: 85%;
+  max-width: 680px;
+}
+
+
+.add-classification-view form {
+  padding: 1rem;
+  border-radius: 8px;
 }

@@ -5,4 +5,14 @@
   } %>
 
   <%# messages() %>
-  <%-  %>
+  <%- messages() %>
+  <div class="management-view">
+    <div class="management-links">
+      <a href="/inv/add-inventory/" class="button">Add New Vehicle</a>
+      <a href="/inv/add-classification/" class="button">Add New Classification</a>
+    </div>
+    <div class="inventory-table-wrapper">
+      <h1>Current Inventory</h1>
+      <%- inventoryTable %>
+    </div>
+  </div>

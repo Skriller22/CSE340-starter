@@ -1,0 +1,97 @@
+const utilities = require(".")
+const { body, validationResult } = require("express-validator")
+const inventoryModel = require("../models/inventoryModel")
+  const validate = {}
+
+/* **************************
+*  Validate Registration Data
+* ************************** */
+validate.inventoryRules = () => {
+    return [
+        // Make is required and must be string
+        body("inv_make")
+            .trim()
+            .notEmpty()
+            .isLength({ min: 1 })
+            .withMessage("Make is required.")
+            .isAlpha()
+            .withMessage("Make must contain only letters.")
+            .escape(),
+        // Model is required and must be string
+        body("inv_model")
+            .trim()
+            .notEmpty()
+            .isLength({ min: 1 })
+            .withMessage("Model is required.")
+            .matches(/^[a-zA-Z0-9\s]+$/)
+            .withMessage("Model must contain only letters, numbers, and spaces.")
+            .escape(),
+        // Year is required and must be a valid year
+        body("inv_year")
+            .trim()
+            .notEmpty()
+            .isInt({ min: 1886, max: new Date().getFullYear() + 1 })
+            .withMessage("Please enter a valid year.")
+            .escape(),
+        // Description is required
+        body("inv_description")
+            .trim()
+            .notEmpty()
+            .withMessage("Description is required.")
+            .escape(),
+        // Price is required and must be a valid decimal
+        body("inv_price")
+            .trim()
+            .notEmpty()
+            .isDecimal()
+            .withMessage("Please enter a valid price.")
+            .escape(),
+        // Miles is required and must be a valid integer
+        body("inv_miles")
+            .trim()
+            .notEmpty()
+            .isInt({ min: 0 })
+            .withMessage("Please enter a valid mileage.")
+            .escape(),
+        // Color is required and must be string
+        body("inv_color")
+            .trim()
+            .notEmpty()
+            .isLength({ min: 1 })
+            .withMessage("Color is required.")
+            .isAlpha()
+            .withMessage("Color must contain only letters.")
+            .escape(),
+        // Classification ID is required and must be integer
+        body("classification_id")
+            .trim()
+            .notEmpty()
+            .isInt()
+            .withMessage("Please select a classification.")
+            .escape(),
+    ]
+}
+
+
+
+/* **************************
+*  Check data and return errors or continue to add inventory item
+* ************************** */
+validate.checkInventoryData = async (req, res, next) => {
+    let errors = []
+    errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        let nav = await utilities.getNav()
+        const addInventoryView = await utilities.buildAddInventoryView(req.body)
+        res.render("./inventory/add-inventory", {
+            title: "Add Inventory",
+            nav,
+            addInventoryView,
+            errors
+        })
+        return
+    }
+    next()
+}
+
+module.exports = validate

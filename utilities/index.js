@@ -85,6 +85,72 @@ Util.buildDetailsView = async function (data) {
   return detailView
 }
 
+ /* *****************************
+  * Build the inventory view HTML
+  * ************************** */
+
+Util.buildInventoryTable = async function (data) {
+  let inventoryTable = '<table id="inventory-table">'
+  inventoryTable += '<thead><tr><th></th><th>Make</th><th>Model</th><th>Year</th><th>Price</th><th>Class ID</th></tr></thead>'
+  inventoryTable += '<tbody>'
+  data.forEach(vehicle => {
+    inventoryTable += '<tr>'
+    inventoryTable += '<td><a href="' + vehicle.inv_image + '" target="_blank">View Image</a></td>'
+    inventoryTable += '<td>' + vehicle.inv_make + '</td>'
+    inventoryTable += '<td>' + vehicle.inv_model + '</td>'
+    inventoryTable += '<td>' + vehicle.inv_year + '</td>'
+    inventoryTable += '<td>$' + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</td>'
+    inventoryTable += '<td>' + vehicle.classification_id + '</td>'
+    inventoryTable += '</tr>'
+  })
+  inventoryTable += '</tbody></table>'
+  return inventoryTable
+}
+
+Util.buildAddInventoryView = async function (data) {
+  let addInventoryView = '<div class="add-inventory-view">'
+  addInventoryView += '<form action="/inv/add-inventory" method="post">'
+  addInventoryView += '<label for="inv_make">Vehicle Make</label>'
+  addInventoryView += '<input type="text" id="inv_make" name="inv_make" pattern="[a-zA-Z0-9\s]+" value="' + (data ? data.inv_make || '' : '') + '" required>'
+  addInventoryView += '<label for="inv_model">Vehicle Model</label>'
+  addInventoryView += '<input type="text" id="inv_model" name="inv_model" pattern="[a-zA-Z0-9\s]+" value="' + (data ? data.inv_model || '' : '') + '" required>'
+  addInventoryView += '<label for="inv_year">Vehicle Year</label>'
+  addInventoryView += '<input type="text" id="inv_year" name="inv_year" pattern="[0-9]{4}" value="' + (data ? data.inv_year || '' : '') + '" required>'
+  addInventoryView += '<label for="inv_description">Vehicle Description</label>'
+  addInventoryView += '<textarea id="inv_description" name="inv_description" required>' + (data ? data.inv_description || '' : '') + '</textarea>'
+  addInventoryView += '<label for="inv_image">Vehicle Image URL</label>'
+  addInventoryView += '<input type="text" id="inv_image" name="inv_image" value="' + (data ? data.inv_image || '' : '') + '" required>'
+  addInventoryView += '<label for="inv_thumbnail">Vehicle Thumbnail URL</label>'
+  addInventoryView += '<input type="text" id="inv_thumbnail" name="inv_thumbnail" value="' + (data ? data.inv_thumbnail || '' : '') + '" required>'
+  addInventoryView += '<label for="inv_price">Vehicle Price</label>'
+  addInventoryView += '<input type="text" id="inv_price" name="inv_price" pattern="^[0-9]+(\.[0-9]{1,2})?$" value="' + (data ? data.inv_price || '' : '') + '" required>'
+  addInventoryView += '<label for="inv_miles">Vehicle Miles</label>'
+  addInventoryView += '<input type="text" id="inv_miles" name="inv_miles" pattern="^[0-9]+$" value="' + (data ? data.inv_miles || '' : '') + '" required>'
+  addInventoryView += '<label for="inv_color">Vehicle Color</label>'
+  addInventoryView += '<input type="text" id="inv_color" name="inv_color" pattern="[a-zA-Z\s]+" value="' + (data ? data.inv_color || '' : '') + '" required>'
+// Build classification select list
+  let classPool = await invModel.getClassifications()
+  let classifications = 
+    '<select name="classification_id" id="classificationList" required>'
+  classifications += '<option value="" disabled ' + (data ? '' : 'selected') + '>Select a Classification</option>'
+  classPool.rows.forEach((row) => {
+    classifications += '<option value="' + row.classification_id + '"'
+    if (
+      data && data.classification_id == row.classification_id
+    ) {
+      classifications += " selected"
+    }
+    classifications += ">" + row.classification_name + "</option>"
+  })
+  classifications += '</select>'
+  addInventoryView += classifications
+
+  addInventoryView += '<button type="submit" class="button">Add Vehicle to Inventory</button>'
+  addInventoryView += '</form>'
+  addInventoryView += '</div>'
+  return addInventoryView
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

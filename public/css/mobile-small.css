@@ -58,4 +58,28 @@
     margin: 0.5rem 0 0 0;
     padding: 0.5rem 0 1rem 0;
   }
+
+  .add-inventory-view {
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  .add-inventory-view form {
+    border: solid 2px var(--primary-color-dark);
+    padding: 0.8rem;
+    margin: 0.5rem;
+    border-radius: 8px;
+  }
+
+  .add-classification-view {
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  .add-classification-view form {
+    border: solid 2px var(--primary-color-dark);
+    padding: 0.8rem;
+    margin: 0.5rem;
+    border-radius: 8px;
+  }
 }

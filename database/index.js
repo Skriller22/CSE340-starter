@@ -20,11 +20,17 @@ if (process.env.NODE_ENV == "development") {
 module.exports = {
   async query(text, params) {
     try {
+      const lower = text.toLowerCase()
+      const isSessionQuery = lower.includes("session")
+      const isSelect = lower.startsWith("select")
+      if (!isSelect && !isSessionQuery) {
+        console.log("non-select or session query", { text, params })
+      }
       const res = await pool.query(text, params)
-      console.log("executed query", { text })
+      //console.log("TEST ALL: executed query", { text, params })
       return res
     } catch (error) {
-      console.error("error in query", { text })
+      console.error("error in query", { text, params, error })
       throw error
     }
   },

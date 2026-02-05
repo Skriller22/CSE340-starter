@@ -44,5 +44,58 @@ async function getInventoryByInventoryId(inventory_Id){
     }
 }
 
+/* ***************************
+ * Get all inventory items
+ * ************************** */
+async function getAllInventory(){
+    try {
+        const data = await pool.query(
+            `SELECT * FROM public.inventory`
+        )
+        return data.rows
+    } catch (error) {
+        console.error("getAllInventory error " + error)
+    }
+}
+
+/* ***************************
+ * Insert a new classification
+ * ************************** */
+async function addClassification(classification_name){
+    try {
+        const sql = 'INSERT INTO public.classification (classification_name) VALUES ($1) RETURNING *'
+        const values = [classification_name]
+        return await pool.query(sql, values)
+    } catch (error) {
+        return error.message
+    }
+}
+
+/* ***************************
+ * Check for existing classification name
+ * ************************** */
+async function checkExistingClassification(classification_name){
+    try {
+        const sql = "SELECT * FROM public.classification WHERE classification_name = $1"
+        const name = await pool.query(sql, [classification_name])
+        return name.rowCount
+    } catch (error) {
+        return error.message
+    }
+}
+
+/* ***************************
+ * Insert a new inventory item
+ * ************************** */
+async function addInventory(inventory_make, inventory_model, inventory_year, inventory_description, inventory_image, inventory_thumbnail, inventory_price, inventory_miles, inventory_color, classification_id){
+    try {
+        const sql = 'INSERT INTO public.inventory (inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *'
+        const values = [inventory_make, inventory_model, inventory_year, inventory_description, inventory_image, inventory_thumbnail, inventory_price, inventory_miles, inventory_color, classification_id]
+        return await pool.query(sql, values)
+    } catch (error) {
+        return error.message
+    }
+}
+
 // Export the functions - CRITICAL
-module.exports = {getClassifications, getInventoryByClassificationId, getInventoryByInventoryId}
+module.exports = {getClassifications, getInventoryByClassificationId, getInventoryByInventoryId, getAllInventory, addClassification, checkExistingClassification, addInventory}
