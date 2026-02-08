@@ -6,6 +6,7 @@ const inventoryModel = require("../models/inventoryModel")
 /* **************************
 *  Validate Registration Data
 * ************************** */
+
 validate.inventoryRules = () => {
     return [
         // Make is required and must be string
@@ -71,8 +72,6 @@ validate.inventoryRules = () => {
             .escape(),
     ]
 }
-
-
 
 /* **************************
 *  Check data and return errors or continue to add inventory item

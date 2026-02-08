@@ -4,22 +4,40 @@ const invController = require("../controllers/invController")
 const detailController = require("../controllers/detailController")
 const utilities = require("../utilities/")
 const classValidate = require("../utilities/add-classification-validation")
-const invValidate = require("../utilities/add-inventory-validation")
+const invAddValidate = require("../utilities/add-inventory-validation")
+const invUpdateValidate = require("../utilities/update-inventory-validation")
 
-router.get("/", invController.buildInventoryTable);
-router.get("/add-classification", invController.buildAddClassificationView);
-router.get("/add-inventory", invController.buildAddInventoryView);
-router.get("/type/:classificationId", invController.buildByClassificationId);
-router.get("/detail/:inventoryId", detailController.buildByInventoryId);
+// Build inventory manageemnt
+router.get("/", utilities.handleErrors(invController.buildInventoryManagementView));
+// Get Inventory JSON for management view table
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON));
+// Build the edit page for individual management by inventory ID
+router.get("/edit/:inventoryId", utilities.handleErrors(invController.buildEditInventoryView));
+// Build add classification form
+router.get("/add-classification", utilities.handleErrors(invController.buildAddClassificationView));
+// Build add inventory form
+router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventoryView));
+// Build inventory view by classification ID
+router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
+// Build inventory view for individual inventory items
+router.get("/detail/:inventoryId", utilities.handleErrors(detailController.buildByInventoryId));
+// Post form submission for adding classification
 router.post("/add-classification",
     classValidate.classificationRules(),
     classValidate.checkClassificationData,
     invController.addClassification
 );
+// Post form submissions for adding inventory
 router.post("/add-inventory",
-    invValidate.inventoryRules(),
-    invValidate.checkInventoryData,
+    invAddValidate.inventoryRules(),
+    invAddValidate.checkInventoryData,
     invController.addInventory
 );
+// Post form submission for updating inventory
+router.post("/update",
+    invAddValidate.inventoryRules(),
+    invUpdateValidate.checkInventoryUpdateData,
+    invController.updateInventory
+)
 
 module.exports = router;

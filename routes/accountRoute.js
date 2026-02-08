@@ -15,9 +15,12 @@ router.post(
 // Process login request
 router.post(
     "/login",
-    (req, res) => {
-        res.status(200).send("login process")
-    }
+    regValidate.loginRules(),
+    regValidate.checkLoginData,
+    utilities.handleErrors(accountController.accountLogin)
 )
+
+// Management router
+router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
 
 module.exports = router;

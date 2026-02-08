@@ -1,0 +1,18 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+  <% } else {
+    res.redirect("/")
+  } %>
+
+  <%# messages() %>
+  <%- messages() %>
+  <% if (errors) { %>
+  <ul class="notice">
+    <% const list = Array.isArray(errors) ? errors : errors.array() 
+    list.forEach(error => {
+    %>
+      <li><%= error.msg %></li>
+    <% }) %>
+      </ul>
+    <% } %>
+  <%- editInventoryView %>

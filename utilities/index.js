@@ -1,4 +1,6 @@
 const invModel = require("../models/inventoryModel")
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 const Util = {}
 
 /* ************************
@@ -23,6 +25,20 @@ Util.getNav = async function (req, res, next) {
   list += "</ul>"
   return list
 }
+
+ /* *****************************
+  * Build the classification list 
+  * ************************** */
+ Util.buildClassificationList = async function (data) {
+  let list = '<select id="classificationList" name="classification_id">'
+  list += '<option value="">Choose a Classification</option>'
+  data.forEach(row => {
+    list += `<option value="${row.classification_id}">${row.classification_name}</option>`
+  })
+  list += '</select>'
+  return list
+}
+
 
 /* *****************************
  * Build the classification view HTML
@@ -88,7 +104,6 @@ Util.buildDetailsView = async function (data) {
  /* *****************************
   * Build the inventory view HTML
   * ************************** */
-
 Util.buildInventoryTable = async function (data) {
   let inventoryTable = '<table id="inventory-table">'
   inventoryTable += '<thead><tr><th></th><th>Make</th><th>Model</th><th>Year</th><th>Price</th><th>Class ID</th></tr></thead>'
@@ -107,6 +122,9 @@ Util.buildInventoryTable = async function (data) {
   return inventoryTable
 }
 
+ /* *****************************
+  * Build the add inventory view 
+  * ************************** */
 Util.buildAddInventoryView = async function (data) {
   let addInventoryView = '<div class="add-inventory-view">'
   addInventoryView += '<form action="/inv/add-inventory" method="post">'
@@ -151,11 +169,94 @@ Util.buildAddInventoryView = async function (data) {
   return addInventoryView
 }
 
+ /* *****************************
+  * Build the edit inventory view HTML
+  * ************************** */
+Util.buildEditInventoryView = async function (data) {
+  let editInventoryView = '<div class="add-inventory-view">'
+  editInventoryView += '<form action="/inv/update" method="post">'
+  editInventoryView += `<input type="hidden" name="inv_id" value="${data.inv_id}">`
+  editInventoryView += '<label for="inv_make">Vehicle Make</label>'
+  editInventoryView += '<input type="text" id="inv_make" name="inv_make" pattern="[a-zA-Z0-9\s]+" value="' + (data ? data.inv_make || '' : '') + '" required>'
+  editInventoryView += '<label for="inv_model">Vehicle Model</label>'
+  editInventoryView += '<input type="text" id="inv_model" name="inv_model" pattern="[a-zA-Z0-9\s]+" value="' + (data ? data.inv_model || '' : '') + '" required>'
+  editInventoryView += '<label for="inv_year">Vehicle Year</label>'
+  editInventoryView += '<input type="text" id="inv_year" name="inv_year" pattern="[0-9]{4}" value="' + (data ? data.inv_year || '' : '') + '" required>'
+  editInventoryView += '<label for="inv_description">Vehicle Description</label>'
+  editInventoryView += '<textarea id="inv_description" name="inv_description" required>' + (data ? data.inv_description || '' : '') + '</textarea>'
+  editInventoryView += '<label for="inv_image">Vehicle Image URL</label>'
+  editInventoryView += '<input type="text" id="inv_image" name="inv_image" value="' + (data ? data.inv_image || '' : '') + '" required>'
+  editInventoryView += '<label for="inv_thumbnail">Vehicle Thumbnail URL</label>'
+  editInventoryView += '<input type="text" id="inv_thumbnail" name="inv_thumbnail" value="' + (data ? data.inv_thumbnail || '' : '') + '" required>'
+  editInventoryView += '<label for="inv_price">Vehicle Price</label>'
+  editInventoryView += '<input type="text" id="inv_price" name="inv_price" pattern="^[0-9]+(\.[0-9]{1,2})?$" value="' + (data ? data.inv_price || '' : '') + '" required>'
+  editInventoryView += '<label for="inv_miles">Vehicle Miles</label>'
+  editInventoryView += '<input type="text" id="inv_miles" name="inv_miles" pattern="^[0-9]+$" value="' + (data ? data.inv_miles || '' : '') + '" required>'
+  editInventoryView += '<label for="inv_color">Vehicle Color</label>'
+  editInventoryView += '<input type="text" id="inv_color" name="inv_color" pattern="[a-zA-Z\s]+" value="' + (data ? data.inv_color || '' : '') + '" required>'
+// Build classification select list
+  let classPool = await invModel.getClassifications()
+  let classifications = 
+    '<select name="classification_id" id="classificationList" required>'
+  classifications += '<option value="" disabled ' + (data ? '' : 'selected') + '>Select a Classification</option>'
+  classPool.rows.forEach((row) => {
+    classifications += '<option value="' + row.classification_id + '"'
+    if (
+      data && data.classification_id == row.classification_id
+    ) {
+      classifications += " selected"
+    }
+    classifications += ">" + row.classification_name + "</option>"
+  })
+  classifications += '</select>'
+  editInventoryView += classifications
+
+  editInventoryView += '<button type="submit" class="button">Update Vehicle</button>'
+  editInventoryView += '</form>'
+  editInventoryView += '</div>'
+  return editInventoryView
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
  * General Error Handling
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
+/* ****************************************
+* Middleware to check token validity
+**************************************** */
+Util.checkJWTToken = (req, res, next) => {
+  if (req.cookies.jwt) {
+    jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      function (err, accountData) {
+        if (err) {
+          req.flash("Please log in")
+          res.clearCookies("jwt")
+          return res.redirect("/account/login")
+        }
+        res.locals.accountData = accountData 
+        res.locals.loggedin = 1
+        next()
+      })
+    } else {
+      next()
+  }
+}
+
+/* ****************************************
+* Check Login
+**************************************** */
+Util.checkLogin = (req, res, next) => {
+  if (res.locals.loggedin) {
+    next()
+  } else {
+    req.flash("notice", "Please Log in.")
+    return res.redirect("/account/login")
+  }
+}
 
 module.exports = Util

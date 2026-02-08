@@ -82,4 +82,8 @@
     margin: 0.5rem;
     border-radius: 8px;
   }
+
+  .management-links {
+    flex-direction: column;
+  }
 }

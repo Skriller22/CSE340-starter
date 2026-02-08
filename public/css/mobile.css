@@ -618,34 +618,44 @@ footer a {
   color: white;
 }
 
+.inventory-table-wrapper #classificationList {
+  width: 96%;
+  margin: 0 2% 1rem 2%;
+  min-height: 3rem;
+}
+
 .inventory-table-wrapper {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
 }
 
-#inventory-table {
+.inventory-table-wrapper p, .inventory-table-wrapper h2 {
+  padding-left: 1rem;
+}
+
+#inventoryDisplay {
   width: 100%;
   border-collapse: collapse;
 }
 
-#inventory-table thead {
+#inventoryDisplay thead {
   background-color: var(--primary-color-dark);
   color: white;
 }
 
-#inventory-table th, #inventory-table td {
+#inventoryDisplay th, #inventoryDisplay td {
   border: 1px solid #ddd;
   padding: 0.75rem;
   text-align: left;
 }
 
-#inventory-table tr th {
+#inventoryDisplay tr th {
   font-weight: bold;
   border: none;
 }
 
-#inventory-table tr:nth-child(even) {
+#inventoryDisplay tr:nth-child(even) {
   background-color: var(--primary-color-light);
 }
 

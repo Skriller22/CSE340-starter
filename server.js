@@ -12,6 +12,7 @@ const env = require("dotenv").config()
 const app = express()
 const session = require("express-session")
 const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
 // Routes and Controllers
 const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute")
@@ -44,6 +45,10 @@ app.use(function(req, res, next){
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+
+app.use(cookieParser())
+
+app.use(utilities.checkJWTToken)
 
 /* ***********************
   * View Engine and Templates
