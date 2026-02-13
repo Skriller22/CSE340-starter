@@ -149,5 +149,13 @@ async function updateInventory(
   }
 }
 
+/* ***************************
+ * Permanently delete inventory item
+ * ************************** */
+async function deleteInventory(inv_id) {
+    const sql = `DELETE FROM public.inventory WHERE inv_id = $1`
+    return pool.query(sql, [inv_id])
+}
+
 // Export the functions - CRITICAL
-module.exports = {getClassifications, getInventoryByClassificationId, getInventoryByInventoryId, getAllInventory, addClassification, checkExistingClassification, addInventory, updateInventory}
+module.exports = {getClassifications, getInventoryByClassificationId, getInventoryByInventoryId, getAllInventory, addClassification, checkExistingClassification, addInventory, updateInventory, deleteInventory}

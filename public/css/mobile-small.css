@@ -83,6 +83,10 @@
     border-radius: 8px;
   }
 
+  #user-account-wrapper {
+  align-items: center;
+}
+
   .management-links {
     flex-direction: column;
   }

@@ -137,9 +137,9 @@ Util.buildAddInventoryView = async function (data) {
   addInventoryView += '<label for="inv_description">Vehicle Description</label>'
   addInventoryView += '<textarea id="inv_description" name="inv_description" required>' + (data ? data.inv_description || '' : '') + '</textarea>'
   addInventoryView += '<label for="inv_image">Vehicle Image URL</label>'
-  addInventoryView += '<input type="text" id="inv_image" name="inv_image" value="' + (data ? data.inv_image || '' : '') + '" required>'
+  addInventoryView += '<input type="text" id="inv_image" name="inv_image" placeholder="/images/vehicles/no-image.png" value="' + (data ? data.inv_image || '/images/vehicles/no-image.png' : '/images/vehicles/no-image.png') + '" required>'
   addInventoryView += '<label for="inv_thumbnail">Vehicle Thumbnail URL</label>'
-  addInventoryView += '<input type="text" id="inv_thumbnail" name="inv_thumbnail" value="' + (data ? data.inv_thumbnail || '' : '') + '" required>'
+  addInventoryView += '<input type="text" id="inv_thumbnail" name="inv_thumbnail" placeholder="/images/vehicles/no-image-tn.png" value="' + (data ? data.inv_thumbnail || '/images/vehicles/no-image-tn.png' : '/images/vehicles/no-image-tn.png') + '" required>'
   addInventoryView += '<label for="inv_price">Vehicle Price</label>'
   addInventoryView += '<input type="text" id="inv_price" name="inv_price" pattern="^[0-9]+(\.[0-9]{1,2})?$" value="' + (data ? data.inv_price || '' : '') + '" required>'
   addInventoryView += '<label for="inv_miles">Vehicle Miles</label>'
@@ -257,6 +257,30 @@ Util.checkLogin = (req, res, next) => {
     req.flash("notice", "Please Log in.")
     return res.redirect("/account/login")
   }
+}
+
+/* ****************************************
+* Check Employee
+**************************************** */
+Util.checkEmployee = (req, res, next) => {
+  if (res.locals.loggedin && (res.locals.accountData.account_type === "Employee" || res.locals.accountData.account_type === "Admin")) {
+    return next()
+  }
+
+  req.flash("notice", "You need employee privileges to view that page.")
+  return res.redirect("/account/")
+}
+
+/* ****************************************
+* Check Admin
+**************************************** */
+Util.checkAdmin = (req, res, next) => {
+  if (res.locals.loggedin && res.locals.accountData.account_type === "Admin") {
+    return next()
+  }
+
+  req.flash("notice", "You need admin privileges to view that page.")
+  return res.redirect("/account/")
 }
 
 module.exports = Util

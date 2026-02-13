@@ -1,0 +1,68 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+  <% } else {
+    res.redirect("/")
+  } %>
+
+  <%# messages() %>
+  <%- messages() %>
+  <% if (errors) { %>
+  <ul class="notice">
+    <% const list = Array.isArray(errors) ? errors : errors.array() 
+    list.forEach(error => {
+    %>
+      <li><%= error.msg %></li>
+    <% }) %>
+      </ul>
+    <% } %>
+
+<div class="delete-inventory-view">
+  <form action="/inv/delete-confirmed" method="post">
+
+    <!-- Hidden ID -->
+    <input type="hidden" name="inv_id" value="<%= data.inv_id %>">
+
+    <label for="inv_make">Vehicle Make</label>
+    <input 
+      type="text" 
+      id="inv_make" 
+      name="inv_make" 
+      pattern="[a-zA-Z0-9\s]+" 
+      value="<%= data.inv_make %>" 
+      required readonly
+    >
+
+    <label for="inv_model">Vehicle Model</label>
+    <input 
+      type="text" 
+      id="inv_model" 
+      name="inv_model" 
+      pattern="[a-zA-Z0-9\s]+" 
+      value="<%= data.inv_model %>" 
+      required readonly
+    >
+
+    <label for="inv_year">Vehicle Year</label>
+    <input 
+      type="text" 
+      id="inv_year" 
+      name="inv_year" 
+      pattern="[0-9]{4}" 
+      value="<%= data.inv_year %>" 
+      required readonly
+    >
+
+    <label for="inv_price">Vehicle Price</label>
+    <input 
+      type="text" 
+      id="inv_price" 
+      name="inv_price" 
+      pattern="^[0-9]+(\.[0-9]{1,2})?$" 
+      value="<%= data.inv_price %>" 
+      required readonly
+    >
+
+    <p id="confirm-delete">Confirm Deletion - This process cannot be undone</p>
+    <button type="submit" class="button">Delete Vehicle</button>
+  </form>
+</div>

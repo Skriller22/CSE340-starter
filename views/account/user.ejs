@@ -1,0 +1,25 @@
+<% if (title) { %>
+  <% } else {
+    res.redirect("/")
+  } %>
+
+<h1><%= accountData.account_firstname %>'s Account</h1>
+<%- messages() %>
+<% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }); %>
+      </ul>
+    <% } %>
+<div id="user-account-wrapper">
+    <h2>Welcome, <%= accountData.account_firstname %></h2>
+
+    <a href='/account/update' class="button">Update account info</a>
+
+    <% if (["Admin", "Employee"].includes(accountData.account_type)) { %>
+      <hr>
+      <h3>Admin Tools</h3>
+      <a href="/inv" class="button">Inventory Management</a>
+    <% } %>
+</div>

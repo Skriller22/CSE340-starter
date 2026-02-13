@@ -48,7 +48,15 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(cookieParser())
 
+// Check for JWT token
 app.use(utilities.checkJWTToken)
+// Check for "loggedin" status for use in JWT token checks
+app.use((req, res, next) => {
+  if (typeof res.locals.loggedin === "undefined") {
+    res.locals.loggedin = 0
+  }
+  next()
+})
 
 /* ***********************
   * View Engine and Templates

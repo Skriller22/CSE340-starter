@@ -102,10 +102,10 @@ async function accountLogin(req, res) {
             } else {
                 res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
             }
-            return res.redirect("/account/")
+            return res.redirect("/account/user")
             }
             else {
-                req.flash("message notice", "Please check your credentials and try again")
+                req.flash("notice", "Please check your credentials and try again")
                 res.status(400).render("account/login", {
                     title: "login",
                     nav,
@@ -118,5 +118,111 @@ async function accountLogin(req, res) {
         }
 }
 
+/* **************************
+ * Build user account page
+ * ************************** */
+async function buildUserPage(req, res, next) {
+    let nav = await utilities.getNav()
+    res.render("account/user", {
+        title: "My Account",
+        nav,
+        accountData: res.locals.accountData,
+        errors: null,
+    })
+}
 
-module.exports = {buildLogin, buildRegister, registerAccount, accountLogin}
+/* **************************
+* Deliver update account View
+* *************************** */
+async function buildUpdatePage(req, res, next) {
+    let nav = await utilities.getNav()
+    res.render("account/update", {
+        title: "Update Account",
+        nav,
+        errors: null,
+        account_Id: res.locals.accountData.account_id,
+        account_Email: res.locals.accountData.account_email,
+        account_FirstName: res.locals.accountData.account_firstname,
+        account_LastName: res.locals.accountData.account_lastname,
+    })
+}
+
+/* **************************
+* Update Account
+* *************************** */
+async function updateAccount(req, res) {
+    let nav = await utilities.getNav()
+    const { account_Id, account_Email, account_FirstName, account_LastName } = req.body
+
+    const updateResult = await accountModel.updateAccount(
+        account_Id,
+        account_Email,
+        account_FirstName,
+        account_LastName
+    )
+
+    if (updateResult) {
+        // Update the JWT token with new data
+        delete updateResult.account_password
+        const accessToken = jwt.sign(updateResult, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+        if (process.env.NODE_ENV === 'developement') {
+            res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+        } else {
+            res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
+        }
+        req.flash("notice-success", "Account information updated successfully.")
+        return res.redirect("/account/user")
+    } else {
+        req.flash("notice", "Sorry, there was an error updating your account.")
+        res.status(501).render("account/update", {
+            title: "Update Account",
+            nav,
+            errors: null,
+            account_Id,
+            account_Email,
+            account_FirstName,
+            account_LastName,
+        })
+    }
+}
+
+/* **************************
+* Update Password
+* *************************** */
+async function updatePassword(req, res) {
+    let nav = await utilities.getNav()
+    const { account_Id, account_Password } = req.body
+
+    // Hash the new password
+    let hashedPassword
+    try {
+        hashedPassword = await bcrypt.hashSync(account_Password, 10)
+    } catch (error) {
+        req.flash("notice", "Sorry, there was an error processing your password update.")
+        res.status(500).render("account/update", {
+            title: "Update Account",
+            nav,
+            errors: null,
+            account_Id,
+        })
+        return
+    }
+
+    const passwordUpdateResult = await accountModel.updatePassword(account_Id, hashedPassword)
+
+    if (passwordUpdateResult) {
+        req.flash("notice-success", "Password updated successfully.")
+        return res.redirect("/account/user")
+    } else {
+        req.flash("notice", "Sorry, there was an error updating your password.")
+        res.status(501).render("account/update", {
+            title: "Update Account",
+            nav,
+            errors: null,
+            account_Id,
+        })
+    }
+}
+
+
+module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, buildUserPage, buildUpdatePage, updateAccount, updatePassword}
