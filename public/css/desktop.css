@@ -67,18 +67,19 @@
     display: flex !important;
     position: static !important;
     flex-direction: row !important;
-    width: auto !important;
+    width: 100% !important;
     background-color: transparent !important;
     padding: 0 !important;
-    justify-content: space-around;
+    justify-content: space-around !important;
     flex: 1;
+    flex-wrap: wrap;
   }
 
   #nav-menu li {
     border: none !important;
-    width: 100%;
+    width: max-content !important;
     text-align: center;
-    padding: 14px 16px;
+    padding: 14px 24px;
     cursor: pointer;
     font-size: 16px;
     border-bottom: none !important;

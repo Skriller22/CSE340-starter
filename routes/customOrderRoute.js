@@ -8,8 +8,8 @@ const customOrderValidation = require('../utilities/custom-order-validation');
 router.get('/new-order', utilities.checkLogin, utilities.handleErrors(customOrderController.buildCustomOrderForm));
 // Display list of user's custom orders - requires login
 router.get('/my-orders', utilities.checkLogin, utilities.handleErrors(customOrderController.buildMyOrders));
-// Display details of a specific order - requires login
-router.get('/order/:orderId', utilities.checkLogin, utilities.handleErrors(customOrderController.buildOrderDetails));
+// Display details of a specific order - requires employee+
+router.get('/order/:orderId', utilities.checkLogin, utilities.checkEmployee, utilities.handleErrors(customOrderController.buildOrderDetails));
 // Show delete confirmation page - requires login
 router.get('/delete/:orderId', utilities.checkLogin, utilities.handleErrors(customOrderController.buildDeleteOrderConfirmation));
 // Employee/Admin: View all custom orders (read-only for employees) - requires employee+

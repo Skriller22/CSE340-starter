@@ -56,8 +56,8 @@ async function buildOrderDetails(req, res, next) {
             return res.redirect("/custom/my-orders");
         }
 
-        // Ensure the order belongs to the logged-in user OR user is an admin
-        if (order.account_id !== res.locals.accountData.account_id && res.locals.accountData.account_type !== "Admin") {
+        // Ensure the order belongs to the logged-in user OR user is an employee/admin
+        if (order.account_id !== res.locals.accountData.account_id && res.locals.accountData.account_type !== "Employee" && res.locals.accountData.account_type !== "Admin") {
             req.flash("notice", "You do not have permission to view this order.");
             return res.redirect("/custom/my-orders");
         }
