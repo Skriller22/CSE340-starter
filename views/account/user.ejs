@@ -10,16 +10,24 @@
     <% errors.array().forEach(error => { %>
       <li><%= error.msg %></li>
     <% }); %>
-      </ul>
-    <% } %>
+  </ul>
+<% } %>
+
 <div id="user-account-wrapper">
     <h2>Welcome, <%= accountData.account_firstname %></h2>
 
     <a href='/account/update' class="button">Update account info</a>
 
+    <hr>
+    <h3>Custom Vehicle Orders</h3>
+    <p class="banner">Design and order your own custom vehicle built to your specifications.</p>
+    <a href="/custom/new-order" class="button">Build Custom Vehicle</a>
+    <a href="/custom/my-orders" class="button">View My Orders</a>
+
     <% if (["Admin", "Employee"].includes(accountData.account_type)) { %>
       <hr>
       <h3>Admin Tools</h3>
       <a href="/inv" class="button">Inventory Management</a>
+      <a href="/custom/admin/orders" class="button">View All Custom Orders</a>
     <% } %>
 </div>

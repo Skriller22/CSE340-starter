@@ -130,20 +130,25 @@ validate.checkLoginData = async (req, res, next) => {
 * ************************** */
 validate.updateAccountRules = () => {
     return [
-        // valid email is required and must be unique
+        // valid email is required and must be unique (excluding current user's email)
         body("account_Email")
             .trim()
             .isEmail()
             .normalizeEmail()
             .withMessage("A valid email is required.")
-            .custom(async (account_Email) => {
+            .custom(async (account_Email, { req }) => {
+                const currentEmail = req.body.account_Email
                 const emailExists = await accountModel.CheckExistingEmail(account_Email)
+                // Only throw error if a different account has this email
                 if (emailExists > 0) {
-                    throw new Error("Email already in use.")
+                    const existingAccount = await accountModel.getAccountByEmail(account_Email)
+                    if (existingAccount && existingAccount.account_id != req.body.account_Id) {
+                        throw new Error("Email already in use.")
+                    }
                 }
             }),
         // First name is required and must be string
-        body("account_Firstname")
+        body("account_FirstName")
             .trim()
             .escape()
             .notEmpty()
@@ -151,7 +156,7 @@ validate.updateAccountRules = () => {
             .withMessage("First name is required."),
 
         // Last name is required and must be string
-        body("account_Lastname")
+        body("account_LastName")
             .trim()
             .escape()
             .notEmpty()
@@ -164,7 +169,7 @@ validate.updateAccountRules = () => {
 *  Check update account data for errors
 * ************************** */
 validate.checkUpdateAccountData = async (req, res, next) => {
-    const {account_Email, account_Firstname, account_Lastname, account_id} = req.body
+    const {account_Email, account_FirstName, account_LastName, account_Id} = req.body
     let errors = []
     errors = validationResult(req)
 
@@ -175,9 +180,9 @@ validate.checkUpdateAccountData = async (req, res, next) => {
             title: "Update Account",
             nav,
             account_Email,
-            account_Firstname,
-            account_Lastname,
-            account_id,
+            account_FirstName,
+            account_LastName,
+            account_Id,
         })
         return
     }

@@ -1,0 +1,68 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+  <% } else {
+    res.redirect("/")
+  } %>
+
+<%- messages() %>
+
+<div class="my-orders-container">
+  
+  <div class="orders-header">
+    <p class="orders-intro">Below are all your custom vehicle orders. Click on any order to view details or make changes.</p>
+    <a href="/custom/new-order" class="button">+ Create New Order</a>
+  </div>
+
+  <% if (orders && orders.length > 0) { %>
+    
+    <div class="orders-grid">
+      <% orders.forEach(order => { %>
+        <div class="order-card">
+          
+          <div class="order-header">
+            <h3 class="order-title"><%= order.order_year %> <%= order.order_make %> <%= order.order_model %></h3>
+            <span class="status-badge status-<%= order.order_status.toLowerCase().replace(/\s+/g, '-') %>">
+              <%= order.order_status %>
+            </span>
+          </div>
+
+          <div class="order-details">
+            <div class="detail-row">
+              <span class="label">Color:</span>
+              <span class="value"><%= order.order_color %></span>
+              <span class="color-swatch" data-color-swatch="<%= order.order_color %>"></span>
+            </div>
+            <div class="detail-row">
+              <span class="label">Budget:</span>
+              <span class="value">$<%= new Intl.NumberFormat('en-US').format(order.order_estimated_price) %></span>
+            </div>
+            <div class="detail-row">
+              <span class="label">Ordered:</span>
+              <span class="value"><%= new Date(order.order_date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %></span>
+            </div>
+          </div>
+
+          <div class="order-description">
+            <p class="description-text"><%= order.order_description.substring(0, 100) %>...</p>
+          </div>
+
+          <div class="order-actions">
+            <a href="/custom/order/<%= order.order_id %>" class="btn-view">View Details</a>
+            <a href="/custom/delete/<%= order.order_id %>" class="btn-delete">Delete</a>
+          </div>
+
+        </div>
+      <% }); %>
+    </div>
+
+  <% } else { %>
+    
+    <div class="no-orders">
+      <h3>No Custom Orders Yet</h3>
+      <p>You haven't created any custom vehicle orders yet. Start creating your dream car today!</p>
+      <a href="/custom/new-order" class="button">Create Your First Order</a>
+    </div>
+
+  <% } %>
+
+</div>

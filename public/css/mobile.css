@@ -615,16 +615,43 @@ footer a {
 #user-account-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: flex-start;
   gap: 0.5rem;
-  padding: 0 1rem;
+  padding: 0 1rem 1rem 1rem;
+  border-top: solid 2px var(--primary-color);
 }
+
+#user-account-wrapper  h3 {
+  margin: 1rem 0 0.5rem 0;
+}
+
+#user-account-wrapper  hr {
+  width: 100%;
+  border: none;
+  border-top: solid 2px var(--primary-color);
+}
+
 
 #user-account-wrapper a.button {
   margin: 0;
   text-align: center;
+  width: 100%;
 }
 
+.banner {
+  background-color: var(--primary-color-light);
+  border-top: solid 1px var(--primary-color-dark);
+  border-bottom: solid 1px var(--primary-color-dark);
+  margin: 1rem 0;
+  padding: 8px 1rem;
+}
+
+#user-account-wrapper .banner {
+  border-radius: 8px;
+  border: solid 2px var(--primary-color-dark);
+  margin: 0 0 1rem 0;
+  width: 100%;
+}
 
 /* Inventory Management Page */
 .management-view {
@@ -694,6 +721,48 @@ footer a {
   background-color: var(--primary-color-light);
 }
 
+#classificationDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+#classificationDisplay thead {
+  background-color: var(--primary-color-dark);
+  color: white;
+}
+
+#classificationDisplay th, #classificationDisplay td {
+  border: 1px solid #ddd;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+#classificationDisplay tr th {
+  font-weight: bold;
+  border: none;
+}
+
+#classificationDisplay tr:nth-child(even) {
+  background-color: var(--primary-color-light);
+}
+
+.classification-management-wrapper {
+  width: 100%;
+  margin-top: 2rem;
+  padding: 1rem 0;
+  border-top: 2px solid var(--primary-color);
+}
+
+.classification-management-wrapper h2 {
+  padding-left: 1rem;
+}
+
+.classification-management-wrapper p {
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+}
+
 .add-inventory-view {
   margin: 0 10% 0 2rem;
   max-width: 100%;
@@ -723,4 +792,446 @@ footer a {
   font-weight: bold;
   font-size: 1.2em;
   margin: 1rem 0;
+}
+
+/* Custom order styles */
+
+.custom-order-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.order-form-wrapper {
+  max-width: 800px;
+  margin: 0 16px 1rem 16px;
+  padding: 0 1rem;
+}
+
+.custom-order-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.custom-order-form label {
+  font-weight: bold;
+}
+
+.custom-order-form input, .custom-order-form select, .custom-order-form textarea {
+  padding: 0.5rem;
+  font-size: 1em;
+  border: 1px solid #a0a0a0;
+  border-radius: 4px;
+}
+
+.custom-order-form fieldset {
+  border: solid 2px var(--primary-color-dark);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.custom-order-form fieldset legend {
+  font-weight: bold;
+  padding: 0 0.5rem;
+  font-size: 1.4rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group .color-value-display {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.form-group .color-picker-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.form-group .color-picker-wrapper input {
+  margin: 0;
+}
+
+.form-group .color-picker-wrapper .color-value-display {
+  width: 100%;
+  height: 30px;
+  margin-left: 1rem;
+}
+
+.form-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-actions a, .form-actions button {
+  text-align: center;
+  padding: 1rem;
+  text-decoration: none;
+  color: white;
+  background-color: var(--primary-color-dark);
+  border-radius: 8px;
+}
+
+.order-info-panel {
+  background-color: var(--primary-color-light);
+  border: solid 2px var(--primary-color-dark);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* My orders page */
+
+.my-orders-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.orders-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: left;
+  margin: 1rem 0;
+}
+
+.orders-intro {
+  margin: 0 0 1rem 0;
+  font-size: 1.2em;
+}
+
+.order-card {
+  border-bottom: solid 2px var(--primary-color-dark);
+  border-top: solid 2px var(--primary-color-dark);
+  padding: 0 0 1rem 4px;
+  margin-bottom: 1rem;
+}
+
+.order-card .order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-details div {
+  margin: 0.5rem 0;
+}
+
+.detail-row .label {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.no-orders {
+  text-align: center;
+  font-size: 1.2em;
+  margin: 2rem 0;
+}
+
+.no-orders p {
+  padding-bottom: 1rem;
+}
+
+/* Order Detail Page - Minimal Styles */
+
+.detail-content {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+}
+
+.detail-section {
+  padding-left: 1rem;
+}
+
+.detail-section h3 {
+  border-bottom: 1px solid var(--primary-color);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.vehicle-header {
+  padding: 1rem;
+  background-color: var(--primary-color-light);
+  border-bottom: 2px solid var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.vehicle-title {
+  margin: 0;
+  font-size: 1.5em;
+  color: var(--primary-color-dark);
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.detail-grid, .detail-section .description-box {
+  margin-right: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem;
+  background-color: #f9f9f9;
+  border-left: 3px solid var(--primary-color);
+  border-radius: 4px;
+}
+
+.detail-item .item-label {
+  font-weight: bold;
+  font-size: 0.85em;
+  color: var(--primary-color-dark);
+}
+
+.detail-item .price {
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.description-box, .notes-box {
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-left: 3px solid var(--primary-color);
+  border-radius: 4px;
+  line-height: 1.6;
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-flex;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  border-radius: 4px;
+  font-weight: bold;
+  border-right: 4px solid var(--primary-color-dark);
+}
+
+.detail-main .status-badge {
+  width: 70%;
+}
+
+.status-pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-in-review, .status-approved, .status-in-production, .status-completed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+/* Sidebar */
+.detail-sidebar {
+  border-top: solid 2px var(--primary-color-dark);
+  border-bottom: solid 2px var(--primary-color-dark);
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+/* Timeline */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  border-left: 2px solid #ddd;
+  padding-left: 1.5rem;
+  margin-left: 0.5rem;
+}
+
+.timeline-item {
+  position: relative;
+  padding: 1rem 0;
+  margin-left: -1.5rem;
+  padding-left: 1.5rem;
+}
+
+.timeline-marker {
+  position: absolute;
+  left: -8px;
+  top: 1.2rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #ddd;
+  border: 2px solid white;
+}
+
+.timeline-item.completed .timeline-marker {
+  background-color: var(--primary-color);
+}
+
+.timeline-item.completed {
+  border-left: 2px solid var(--primary-color);
+  margin-left: -1.5rem;
+}
+
+.timeline-text strong {
+  font-size: 0.95em;
+  display: block;
+}
+
+.timeline-text small {
+  font-size: 0.85em;
+  color: #666;
+}
+
+/* Actions */
+.order-actions-sidebar {
+  padding-top: 1rem;
+}
+
+.btn-action {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.btn-action.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-action.btn-delete {
+  background-color: #dc3545;
+  color: white;
+}
+
+.order-details .color-swatch {
+  width: 60px;
+  height: 60px;
+  border-radius: 4px;
+  border: 2px solid #ddd;
+}
+
+.order-card .color-swatch {
+  width: 32px;
+  height: 32px;
+}
+
+/* Admin Orders Management */
+.admin-orders-container {
+  margin: 1rem 0;
+}
+
+.admin-orders-header {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  background-color: var(--primary-color-light);
+  border-radius: 4px;
+}
+
+.admin-orders-header p {
+  margin: 0 0 1rem 0;
+  color: #333;
+}
+
+.admin-orders-header a.button {
+  margin-top: 0;
+  display: inline-block;
+  font-size: 1em;
+  padding: 0.7rem 1rem;
+}
+
+.orders-table-wrapper {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.orders-table-wrapper h2 {
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+}
+
+.admin-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.admin-orders-table thead {
+  background-color: var(--primary-color-dark);
+  color: white;
+}
+
+.admin-orders-table th, .admin-orders-table td {
+  border: 1px solid #ddd;
+  padding: 0.75rem;
+  text-align: left;
+  font-size: 0.95em;
+}
+
+.admin-orders-table tr:nth-child(even) {
+  background-color: var(--primary-color-light);
+}
+
+.status-form {
+  margin: 0;
+}
+
+.status-select {
+  padding: 0.4rem;
+  border: 1px solid #999;
+  border-radius: 4px;
+  font-size: 0.9em;
+  cursor: pointer;
+  min-width: 110px;
+}
+
+.status-select:hover {
+  border-color: var(--primary-color);
+}
+
+.btn-view {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-color-dark);
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease;
+}
+
+.btn-view:hover {
+  background-color: var(--primary-color);
+}
+
+.btn-delete {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #dc3545;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease;
+}
+
+.btn-delete:hover {
+  background-color: #c82333;
 }

@@ -8,9 +8,9 @@ const invAddValidate = require("../utilities/add-inventory-validation")
 const invUpdateValidate = require("../utilities/update-inventory-validation")
 const protected = (utilities.checkLogin)
 // Optional middleware for employee only pages
-const employeeOnly = (utilities.checkEmployee, utilities.checkAdmin)
+const employeeOnly = [utilities.checkEmployee]
 // Optional middleware for admin only pages
-const adminOnly = (utilities.checkAdmin)
+const adminOnly = [utilities.checkAdmin]
 
 // Build inventory manageemnt
 router.get("/", protected, employeeOnly, utilities.handleErrors(invController.buildInventoryManagementView));
@@ -22,6 +22,8 @@ router.get("/edit/:inventoryId", protected, employeeOnly, utilities.handleErrors
 router.get("/delete/:inventoryId", protected, employeeOnly, utilities.handleErrors(invController.buildDeleteInventoryView));
 // Build add classification form
 router.get("/add-classification", protected, employeeOnly, utilities.handleErrors(invController.buildAddClassificationView));
+// Build delete classification confirmation view
+router.get("/delete-classification/:classificationId", protected, adminOnly, utilities.handleErrors(invController.buildDeleteClassificationView));
 // Build add inventory form
 router.get("/add-inventory", protected, employeeOnly, utilities.handleErrors(invController.buildAddInventoryView));
 // Build inventory view by classification ID
@@ -55,5 +57,11 @@ router.post("/delete-confirmed",
     protected, employeeOnly, adminOnly,
     invController.deleteInventory
 )
+
+// Delete classification
+router.post("/delete-classification", 
+    protected, adminOnly,
+    utilities.handleErrors(invController.deleteClassification)
+);
 
 module.exports = router;

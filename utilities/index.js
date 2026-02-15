@@ -268,7 +268,7 @@ Util.checkEmployee = (req, res, next) => {
   }
 
   req.flash("notice", "You need employee privileges to view that page.")
-  return res.redirect("/account/")
+  return res.redirect("/account/user")
 }
 
 /* ****************************************
@@ -280,7 +280,7 @@ Util.checkAdmin = (req, res, next) => {
   }
 
   req.flash("notice", "You need admin privileges to view that page.")
-  return res.redirect("/account/")
+  return res.redirect("/account/user")
 }
 
 module.exports = Util

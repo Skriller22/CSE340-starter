@@ -1,0 +1,37 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+  <% } else {
+    res.redirect("/")
+  } %>
+
+  <%# messages() %>
+  <%- messages() %>
+  <% if (errors) { %>
+  <ul class="notice">
+    <% const list = Array.isArray(errors) ? errors : errors.array() 
+    list.forEach(error => {
+    %>
+      <li><%= error.msg %></li>
+    <% }) %>
+      </ul>
+    <% } %>
+
+<div class="delete-classification-view">
+  <form action="/inv/delete-classification" method="post">
+
+    <!-- Hidden ID -->
+    <input type="hidden" name="classification_id" value="<%= classification.classification_id %>">
+
+    <label for="classification_name">Classification Name</label>
+    <input 
+      type="text" 
+      id="classification_name" 
+      name="classification_name" 
+      value="<%= classification.classification_name %>" 
+      required readonly
+    >
+
+    <p id="confirm-delete">Confirm Deletion - This process cannot be undone</p>
+    <button type="submit" class="button">Delete Classification</button>
+  </form>
+</div>

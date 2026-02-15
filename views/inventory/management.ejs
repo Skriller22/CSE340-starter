@@ -18,5 +18,27 @@
       <table id="inventoryDisplay"></table>
       <noscript>JavaScript must be enabled to use this page.</noscript>
     </div>
+    <% if (accountData.account_type === "Admin") { %>
+      <div class="classification-management-wrapper">
+        <h2>Manage Classifications</h2>
+        <p>View and delete classifications</p>
+        <table id="classificationDisplay">
+          <thead>
+            <tr><th>Classification Name</th><td>&nbsp;</td></tr>
+          </thead>
+          <tbody>
+            <% if (classifications && classifications.length > 0) { %>
+              <% classifications.forEach(function(classification) { %>
+                <tr>
+                  <td><%= classification.classification_name %></td>
+                  <td><a href='/inv/delete-classification/<%= classification.classification_id %>' title='Click to delete'>Delete</a></td>
+                </tr>
+              <% }) %>
+            <% } %>
+          </tbody>
+        </table>
+        <noscript>JavaScript must be enabled to use this page.</noscript>
+      </div>
+    <% } %>
   </div>
   <script src="../js/inventory.js"></script>

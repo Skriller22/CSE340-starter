@@ -52,6 +52,7 @@ invCont.buildInventoryManagementView = async function (req, res, next) {
         title: "Inventory Management",
         nav,
         classificationSelect,
+        classifications: classData.rows,
     })
 }
 
@@ -303,6 +304,55 @@ invCont.deleteInventory = async function (req, res, next) {
         console.error("deleteInventory error:", error)
         req.flash("notice", "An error occured while attempting vehicle deletion.")
         return res.redirect("/inv/")
+    }
+}
+
+/* ***************************
+*  Build delete classification confirmation view
+* ************************** */
+invCont.buildDeleteClassificationView = async function (req, res, next) {
+    let nav = await utilities.getNav()
+    const classification_id = parseInt(req.params.classificationId)
+    const classData = await invModel.getClassifications()
+    const classification = classData.rows.find(c => c.classification_id === classification_id)
+    
+    if (!classification) {
+        req.flash("notice", "Classification not found.")
+        return res.redirect("/inv/")
+    }
+
+    // Check if classification has inventory items
+    const inventoryData = await invModel.getInventoryByClassificationId(classification_id)
+    if (inventoryData && inventoryData.length > 0) {
+        req.flash("notice", "Cannot delete classification. It contains inventory items.")
+        return res.redirect("/inv/")
+    }
+
+    res.render("./inventory/delete-classification", {
+        title: "Delete Classification",
+        nav,
+        classification,
+        errors: null,
+    })
+}
+
+/* ***************************
+*  Delete classification
+* ************************** */
+invCont.deleteClassification = async function (req, res, next) {
+    const { classification_id, classification_name } = req.body
+    try {
+        const deleteResult = await invModel.deleteClassification(classification_id)
+        if (deleteResult.rowCount > 0) {
+            req.flash("notice-success", `The classification "${classification_name}" has been deleted successfully.`)
+            res.redirect("/inv/")
+        } else {
+            req.flash("notice", "Sorry, the classification could not be deleted.")
+            res.redirect("/inv/")
+        }
+    } catch (error) {
+        console.error("deleteClassification error " + error)
+        next(error)
     }
 }
 

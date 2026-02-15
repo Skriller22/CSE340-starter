@@ -210,4 +210,38 @@
     margin: 1rem 0;
     border-radius: 8px;
   }
+
+  /* Custom order styles */
+  .detail-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .order-detail-container .detail-content {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+
+  .order-detail-container .detail-main,
+  .order-detail-container .detail-sidebar {
+    border: none;
+    max-width: 100%;
+    padding: 0;
+  }
+
+  /* Admin orders view */
+  .admin-orders-table {
+    font-size: 0.95em;
+  }
+
+  .admin-orders-table th, .admin-orders-table td {
+    padding: 1rem;
+  }
+
+  .admin-orders-header a.button {
+    font-size: 1.4em;
+    padding: 1rem;
+    margin-top: 0;
+  }
 }

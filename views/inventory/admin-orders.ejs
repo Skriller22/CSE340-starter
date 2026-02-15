@@ -1,0 +1,74 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+  <% } else {
+    res.redirect("/")
+  } %>
+
+<%- messages() %>
+
+<div class="admin-orders-container">
+  
+  <div class="admin-orders-header">
+    <p class="admin-intro"><% if (isAdmin) { %>Manage all custom vehicle orders from your customers. Update order status and add notes.<% } else { %>View all custom vehicle orders from your customers.<% } %></p>
+    <a href="/inv/" class="button">Back to Inventory Management</a>
+  </div>
+
+  <% if (orders && orders.length > 0) { %>
+    
+    <div class="orders-table-wrapper">
+      <h2>All Custom Orders</h2>
+      <table class="admin-orders-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Vehicle</th>
+            <th>Status</th>
+            <th>Budget</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% orders.forEach(order => { %>
+            <tr>
+              <td>#<%= order.order_id %></td>
+              <td><%= order.account_firstname %> <%= order.account_lastname %></td>
+              <td><%= order.order_year %> <%= order.order_make %> <%= order.order_model %></td>
+              <td>
+                <% if (isAdmin) { %>
+                  <form action="/custom/admin/update-status" method="post" class="status-form" style="display: inline;">
+                    <input type="hidden" name="order_id" value="<%= order.order_id %>">
+                    <select name="order_status" class="status-select" onchange="this.form.submit()">
+                      <option <%= order.order_status === 'Pending' ? 'selected' : '' %>>Pending</option>
+                      <option <%= order.order_status === 'In Review' ? 'selected' : '' %>>In Review</option>
+                      <option <%= order.order_status === 'Approved' ? 'selected' : '' %>>Approved</option>
+                      <option <%= order.order_status === 'In Production' ? 'selected' : '' %>>In Production</option>
+                      <option <%= order.order_status === 'Completed' ? 'selected' : '' %>>Completed</option>
+                    </select>
+                  </form>
+                <% } else { %>
+                  <span class="status-badge status-<%= order.order_status.toLowerCase().replace(/\s+/g, '-') %>"><%= order.order_status %></span>
+                <% } %>
+              </td>
+              <td>$<%= new Intl.NumberFormat('en-US').format(order.order_estimated_price) %></td>
+              <td><%= new Date(order.order_date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %></td>
+              <td>
+                <a href="/custom/order/<%= order.order_id %>" class="btn-view">View</a>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+
+  <% } else { %>
+    
+    <div class="no-orders">
+      <h3>No Custom Orders</h3>
+      <p>There are currently no custom orders to manage.</p>
+    </div>
+
+  <% } %>
+
+</div>

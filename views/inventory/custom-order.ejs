@@ -1,0 +1,139 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+  <% } else {
+    res.redirect("/")
+  } %>
+
+<%- messages() %>
+
+<% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }); %>
+  </ul>
+<% } %>
+
+<div class="custom-order-container">
+    <div class="order-form-wrapper">
+        <form action="/custom/new-order" method="POST" class="custom-order-form">
+
+            <fieldset>
+                <legend>Vehicle Specifications</legend>
+                
+                <div class="form-group">
+                <label for="order_make">Vehicle Make *</label>
+                <input 
+                    type="text" 
+                    id="order_make" 
+                    name="order_make" 
+                    required 
+                    placeholder="e.g., Ford, Chevy, BMW"
+                    value="<%= locals.order_make || '' %>"
+                    maxlength="50"
+                >
+                </div>
+
+                <div class="form-group">
+                <label for="order_model">Vehicle Model *</label>
+                <input 
+                    type="text" 
+                    id="order_model" 
+                    name="order_model" 
+                    required 
+                    placeholder="e.g., Mustang, Camaro"
+                    value="<%= locals.order_model || '' %>"
+                    maxlength="50"
+                >
+                </div>
+
+                <div class="form-group">
+                <label for="order_year">Year *</label>
+                <input 
+                    type="number" 
+                    id="order_year" 
+                    name="order_year" 
+                    required 
+                    placeholder="2025"
+                    min="1950"
+                    value="<%= locals.order_year || '' %>"
+                >
+                </div>
+
+                <div class="form-group">
+                    <label for="order_color">Color *</label>
+                    <div class="color-picker-wrapper">
+                        <input 
+                        type="color" 
+                        id="order_color" 
+                        name="order_color" 
+                        required 
+                        value="<%= locals.order_color || '#0066ff' %>"
+                        title="Click to select a color"
+                        >
+                        <input 
+                        type="text" 
+                        id="order_color_text" 
+                        placeholder="Color value will appear here"
+                        readonly
+                        class="color-value-display"
+                        >
+                    </div>
+                </div>
+
+            </fieldset>
+
+            <fieldset>
+                <legend>Build Details</legend>
+                
+                <div class="form-group">
+                    <label for="order_description">Description of Your Build *</label>
+                    <textarea 
+                    id="order_description" 
+                    name="order_description" 
+                    required 
+                    placeholder="Describe your custom build in detail. Include any special features, modifications, interior upgrades, performance enhancements, etc."
+                    rows="6"
+                    maxlength="1000"
+                    ><%= locals.order_description || '' %></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="order_estimated_price">Estimated Budget *</label>
+                    <div class="price-input-wrapper">
+                    <span class="currency-symbol">$</span>
+                    <input 
+                        type="number" 
+                        id="order_estimated_price" 
+                        name="order_estimated_price" 
+                        required 
+                        placeholder="100000"
+                        min="100"
+                        step="100"
+                        value="<%= locals.order_estimated_price || '' %>"
+                    >
+                    </div>
+                </div>
+
+            </fieldset>
+            <div class="form-actions">
+                <button type="submit" class="button">Submit Custom Order</button>
+                <a href="/custom/my-orders" class="button">View my orders</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="order-info-panel">
+        <h3>What Happens Next?</h3>
+        <ol>
+        <li><strong>Submit:</strong> Fill out the form with your custom vehicle specifications</li>
+        <li><strong>Review:</strong> Our team will review your request within 24 hours</li>
+        <li><strong>Quote:</strong> We'll provide you with a detailed quote and timeline</li>
+        <li><strong>Build:</strong> Once approved, we'll begin building your custom vehicle</li>
+        <li><strong>Success:</strong> Schedule a delivery or pickup when your vehicle is complete</li>
+        </ol>
+        
+        <h3>Need Help?</h3>
+        <p>Have questions about ordering a custom vehicle? Contact our sales team at sales@csemotors.com or call 1-800-CSE-MOTO.</p>
+    </div>
+</div>

@@ -157,5 +157,13 @@ async function deleteInventory(inv_id) {
     return pool.query(sql, [inv_id])
 }
 
+/* ***************************
+ * Delete a classification by ID
+ * ************************** */
+async function deleteClassification(classification_id) {
+    const sql = `DELETE FROM public.classification WHERE classification_id = $1`
+    return pool.query(sql, [classification_id])
+}
+
 // Export the functions - CRITICAL
-module.exports = {getClassifications, getInventoryByClassificationId, getInventoryByInventoryId, getAllInventory, addClassification, checkExistingClassification, addInventory, updateInventory, deleteInventory}
+module.exports = {getClassifications, getInventoryByClassificationId, getInventoryByInventoryId, getAllInventory, addClassification, checkExistingClassification, addInventory, updateInventory, deleteInventory, deleteClassification}

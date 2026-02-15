@@ -19,6 +19,7 @@ const inventoryRoute = require("./routes/inventoryRoute")
 const account = require("./routes/accountRoute")
 const baseController = require("./controllers/baseController")
 const accountController = require("./controllers/accountController")
+const customOrderRoute = require("./routes/customOrderRoute")
 // Utilities and Database
 const utilities = require("./utilities/")
 const pool = require("./database/")
@@ -76,6 +77,8 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 app.use("/inv", inventoryRoute)
 // Account routes
 app.use("/account", account)
+// Custom order routes
+app.use("/custom", customOrderRoute)
 
 // Error route
 const errorRoute = require("./routes/errorRoute")

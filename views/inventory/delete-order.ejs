@@ -1,0 +1,63 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+  <% } else {
+    res.redirect("/")
+  } %>
+
+  <%- messages() %>
+  <% if (errors) { %>
+  <ul class="notice">
+    <% const list = Array.isArray(errors) ? errors : errors.array() 
+    list.forEach(error => {
+    %>
+      <li><%= error.msg %></li>
+    <% }) %>
+      </ul>
+    <% } %>
+
+<div class="delete-order-view">
+  <form action="/custom/delete-confirmed" method="post">
+
+    <!-- Hidden ID -->
+    <input type="hidden" name="order_id" value="<%= order.order_id %>">
+
+    <label for="order_year">Vehicle Year</label>
+    <input 
+      type="text" 
+      id="order_year" 
+      name="order_year" 
+      value="<%= order.order_year %>" 
+      required readonly
+    >
+
+    <label for="order_make">Vehicle Make</label>
+    <input 
+      type="text" 
+      id="order_make" 
+      name="order_make" 
+      value="<%= order.order_make %>" 
+      required readonly
+    >
+
+    <label for="order_model">Vehicle Model</label>
+    <input 
+      type="text" 
+      id="order_model" 
+      name="order_model" 
+      value="<%= order.order_model %>" 
+      required readonly
+    >
+
+    <label for="order_color">Vehicle Color</label>
+    <input 
+      type="text" 
+      id="order_color" 
+      name="order_color" 
+      value="<%= order.order_color %>" 
+      required readonly
+    >
+
+    <p id="confirm-delete">Confirm Deletion - This process cannot be undone</p>
+    <button type="submit" class="button">Delete Order</button>
+  </form>
+</div>

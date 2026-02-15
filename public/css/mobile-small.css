@@ -85,9 +85,60 @@
 
   #user-account-wrapper {
   align-items: center;
-}
+  margin: 0;
+  padding: 0;
+  }
+
+  p.banner {
+    border: none;
+  }
+
+  #user-account-wrapper p.banner {
+    margin: 0 0 1rem 0;
+    border-radius: 0;
+    width: 100%;
+  }
+
+  #user-account-wrapper a.button {
+    width: 80%;
+    margin: 0.5rem 1rem;
+  }
 
   .management-links {
     flex-direction: column;
+  }
+
+  .order-form-wrapper {
+    margin: 0 auto;
+    max-width: 100%;
+    padding: 1rem;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+
+  }
+
+  .custom-order-form {
+    margin: 0 auto;
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .order-card .order-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .order-card .order-header .status-badge {
+    border-left: solid 4px var(--primary-color-dark);
+  }
+
+  /* Order details page */
+  .status-section {
+    display: flex;
+    justify-content: flex-end;
+    margin: 1rem 10% 0 0;
   }
 }
