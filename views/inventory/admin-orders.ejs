@@ -10,7 +10,9 @@
   
   <div class="admin-orders-header">
     <p class="admin-intro"><% if (isAdmin) { %>Manage all custom vehicle orders from your customers. Update order status and add notes.<% } else { %>View all custom vehicle orders from your customers.<% } %></p>
-    <a href="/inv/" class="button">Back to Inventory Management</a>
+    <div class="admin-orders-actions">
+      <a href="/account/user" class="button">Back to My Account</a>
+      <a href="/inv/" class="button">Back to Inventory Management</a>
   </div>
 
   <% if (orders && orders.length > 0) { %>

@@ -231,4 +231,40 @@ validate.checkPasswordUpdateData = async (req, res, next) => {
     next()
 }
 
+/* **************************
+* Update account type rules (admin only)
+* ************************** */
+validate.updateAccountTypeRules = () => {
+    return [
+        // Account type must be one of the allowed values
+        body("account_Type")
+            .trim()
+            .escape()
+            .notEmpty()
+            .isIn(["Customer", "Employee", "Admin"])
+            .withMessage("Invalid account type."),
+    ]
+}
+
+/* **************************
+*  Check account type update data for errors (admin only)
+* ************************** */
+validate.checkUpdateAccountTypeData = async (req, res, next) => {
+    const {account_Id} = req.body
+    let errors = []
+    errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        let nav = await utilities.getNav()
+        res.render("account/manage", {
+            errors,
+            title: "Manage Accounts",
+            nav,
+            account_Id,
+        })
+        return
+    }
+    next()
+}
+
 module.exports = validate

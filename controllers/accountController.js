@@ -262,5 +262,77 @@ async function updateAccountAdmin(req, res) {
     }
 }
 
+/* **************************
+* Update Account Type - Admin Only, prevents user redirect
+* *************************** */
+async function updateAccountType(req, res) {
+    let nav = await utilities.getNav()
+    const { account_Id, account_Type } = req.body
+    const updateResult = await accountModel.updateAccountType(
+        account_Id,
+        account_Type
+    )
 
-module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, buildUserPage, buildUpdatePage, updateAccount, updatePassword, buildAccountManager, updateAccountAdmin}
+    if (updateResult) {
+        req.flash("notice-success", "Account type updated successfully.")
+        return res.redirect("/account/manage")
+    }
+    else {
+        req.flash("notice", "Sorry, there was an error updating the account type.")
+        res.status(501).redirect("/account/manage")
+    }
+}
+
+/* **************************
+* Build Delete Account Confirmation Page - Admin Only, prevents user redirect
+* *************************** */
+async function buildDeleteAccount(req, res, next) {
+    let nav = await utilities.getNav()
+    const account_Id = req.params.account_Id
+    const account = await accountModel.getAccountById(account_Id)
+    res.render("account/delete", {
+        title: "Delete Account",
+        nav,
+        account_Id,
+        account,
+        errors: null,
+    })
+}
+
+
+/* **************************
+* Delete Account - Admin Only, prevents user redirect, and checks to prevent deletion of self or last admin
+* *************************** */
+async function deleteAccount(req, res) {
+    let nav = await utilities.getNav()
+    const { account_id } = req.body // ID of the account to delete
+    const currentAdmin = res.locals.accountData  // The logged-in admin
+    
+    // Check if trying to delete self
+    if (parseInt(account_id) === parseInt(currentAdmin.account_id)) {
+        req.flash("notice", "You cannot delete your own account.")
+        return res.redirect("/account/manage")
+    }
+    
+    // Check if trying to delete the last admin
+    const accountToDelete = await accountModel.getAccountById(account_id)
+    if (accountToDelete && accountToDelete.account_type === 'Admin') {
+        const adminCount = await accountModel.countAdmins()
+        if (adminCount <= 1) {
+            req.flash("notice", "Cannot delete the last admin account.")
+            return res.redirect("/account/manage")
+        }
+    }
+    
+    const deleteResult = await accountModel.deleteAccount(account_id)
+    if (deleteResult) {
+        req.flash("notice-success", "Account deleted successfully.")
+        return res.redirect("/account/manage")
+    } else {
+        req.flash("notice", "Sorry, there was an error deleting the account.")
+        return res.redirect("/account/manage")
+    }
+}
+
+
+module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, buildUserPage, buildUpdatePage, updateAccount, updatePassword, buildAccountManager, updateAccountAdmin, updateAccountType, deleteAccount, buildDeleteAccount}

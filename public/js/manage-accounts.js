@@ -54,18 +54,21 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('display_lastname').textContent = account.account_lastname || '';
       document.getElementById('display_email').textContent = account.account_email || '';
       document.getElementById('display_type').textContent = account.account_type || '';
-
+      
       // Populate form fields
       document.getElementById('account_Id').value = account.account_id;
       document.getElementById('password_account_Id').value = account.account_id;
+      document.getElementById('type_account_Id').value = account.account_id;
       document.getElementById('account_Email').value = account.account_email || '';
       document.getElementById('account_FirstName').value = account.account_firstname || '';
       document.getElementById('account_LastName').value = account.account_lastname || '';
+      document.getElementById('account_Type').value = account.account_type || '';
+
+      // Update delete link
+      document.getElementById('red-button').href = `/account/delete/${account.account_id}`;
 
       // Show details section
-      console.log('Setting display to block');
       detailsDiv.style.display = 'block';
-      console.log('Display value after setting:', detailsDiv.style.display);
     } else {
       console.warn('Account not found:', accountId);
       detailsDiv.style.display = 'none';

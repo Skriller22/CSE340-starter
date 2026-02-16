@@ -80,5 +80,56 @@ async function getAllAccounts() {
     }
 }
 
+/* ***************************
+ * Get account by ID
+ * ************************** */
+async function getAccountById(account_Id) {
+    try {
+        const sql = "SELECT account_id, account_firstname, account_lastname, account_email, account_type FROM account WHERE account_id = $1"
+        const result = await pool.query(sql, [account_Id])
+        return result.rows[0]
+    } catch (error) {
+        return error.message
+    }
+}
+
+/* ***************************
+ * Update account type (admin only)
+ * ************************** */
+async function updateAccountType(account_Id, account_Type) {
+    try {
+        const sql = "UPDATE account SET account_type = $1 WHERE account_id = $2 RETURNING *"
+        const values = [account_Type, account_Id]
+        const result = await pool.query(sql, values)
+        return result.rows[0]
+    } catch (error) {
+        return error.message
+    }
+}
+
+/* ***************************
+ * Delete account (admin only)
+ * ************************** */
+async function deleteAccount(account_Id) {
+    try {
+        const sql = "DELETE FROM account WHERE account_id = $1"
+        const values = [account_Id]
+        const result = await pool.query(sql, values)
+        return result.rowCount > 0  // Returns true if a row was deleted
+    } catch (error) {
+        return error.message
+    }
+}
+
+async function countAdmins() {
+    try {
+        const sql = "SELECT COUNT(*) as count FROM account WHERE account_type = 'Admin'"
+        const result = await pool.query(sql)
+        return parseInt(result.rows[0].count)
+    } catch (error) {
+        return error.message
+    }
+}
+
 // Export the functions - CRITICAL
-module.exports = {registerAccount, CheckExistingEmail, getAccountByEmail, updateAccount, updatePassword, getAllAccounts}
+module.exports = {registerAccount, CheckExistingEmail, getAccountByEmail, updateAccount, updatePassword, getAllAccounts, updateAccountType, deleteAccount, getAccountById, countAdmins}

@@ -14,6 +14,8 @@ router.get("/user", utilities.checkLogin, utilities.handleErrors(accountControll
 router.get("/update", utilities.checkLogin, utilities.handleErrors(accountController.buildUpdatePage))
 // Build account manager view (admin only)
 router.get("/manage", utilities.checkLogin, utilities.checkAdmin, utilities.handleErrors(accountController.buildAccountManager))
+// Build account delete confirmation view (admin only)
+router.get("/delete/:account_Id", utilities.checkLogin, utilities.checkAdmin, utilities.handleErrors(accountController.buildDeleteAccount))
 
 // Process register request
 router.post(
@@ -61,5 +63,22 @@ router.post(
     regValidate.checkUpdateAccountData,
     utilities.handleErrors(accountController.updateAccountAdmin)
 )
+
+// Process account type update request for admin only
+router.post(
+    "/update-account-type",
+    utilities.checkLogin,
+    utilities.checkAdmin,
+    regValidate.updateAccountTypeRules(),
+    regValidate.checkUpdateAccountTypeData,
+    utilities.handleErrors(accountController.updateAccountType)
+)
+
+// Process account deletion request for admin only
+router.post(
+    "/delete-account", 
+    utilities.checkLogin, 
+    utilities.checkAdmin,
+    utilities.handleErrors(accountController.deleteAccount))
 
 module.exports = router;
