@@ -25,7 +25,7 @@
 }
 
 #top-header .siteName {
-  font-size: 3em;
+  font-size: 2em;
   font-weight: bold;
   padding: 2rem 1rem;
   text-decoration: none;
@@ -39,6 +39,10 @@
 #tools {
   align-self: center;
   padding: 0.5rem;
+  gap: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 #tools a {
@@ -46,7 +50,7 @@
   color: var(--text-color);
   font-weight: bold;
   font-size: 1.8em;
-  padding: 1rem;
+  text-align: center;
 }
 
 #tools a:hover {
@@ -651,6 +655,38 @@ footer a {
   border: solid 2px var(--primary-color-dark);
   margin: 0 0 1rem 0;
   width: 100%;
+}
+
+.account-management-container div.account-selector-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem;
+  gap: 8px;
+  border-top: solid 2px var(--primary-color);
+  border-bottom: solid 2px var(--primary-color);
+}
+
+.account-management-container div.account-info-section {
+  border: solid 2px var(--primary-color-dark);
+  background-color: var(--primary-color-light);
+  border-radius: 8px;
+  width: max-content;
+  padding: 1rem;
+  margin: 1rem auto 1rem 5%;
+}
+
+.account-management-container div.account-info-section h2 {
+  margin: 0 0 1rem 0;
+  font-size: 2.2rem;
+}
+
+.account-management-container div.account-info-section p {
+  font-size: 1.2rem;
+}
+
+.account-management-container div.account-info-section p:last-child {
+  margin-bottom: 0;
 }
 
 /* Inventory Management Page */

@@ -24,10 +24,17 @@
     <a href="/custom/new-order" class="button">Build Custom Vehicle</a>
     <a href="/custom/my-orders" class="button">View My Orders</a>
 
-    <% if (["Admin", "Employee"].includes(accountData.account_type)) { %>
+    <% if (["Employee"].includes(accountData.account_type)) { %>
+      <hr>
+      <h3>Employee Tools</h3>
+      <a href="/inv" class="button">Inventory Management</a>
+      <a href="/custom/admin/orders" class="button">View Custom Orders</a>
+    <% } %>
+    <% if (["Admin"].includes(accountData.account_type)) { %>
       <hr>
       <h3>Admin Tools</h3>
       <a href="/inv" class="button">Inventory Management</a>
-      <a href="/custom/admin/orders" class="button">View All Custom Orders</a>
+      <a href="/account/manage" class="button">User Management</a>
+      <a href="/custom/admin/orders" class="button">Manage Custom Orders</a>
     <% } %>
 </div>

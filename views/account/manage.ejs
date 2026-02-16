@@ -1,0 +1,69 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+  <% } else {
+    res.redirect("/")
+  } %>
+
+<%- messages() %>
+<% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }); %>
+  </ul>
+<% } %>
+
+<div class="account-management-container" data-accounts="<%= JSON.stringify(accounts || []) %>">
+  <div class="account-selector-section">
+    <label for="account_select">Select Account:</label>
+    <select id="account_select" name="account_select">
+      <option value="">-- Choose an account --</option>
+      <% if (accounts && accounts.length > 0) { %>
+        <% accounts.forEach(function(account) { %>
+          <option value="<%= account.account_id %>">
+            <%= account.account_firstname %> <%= account.account_lastname %> (<%= account.account_email %>) - <%= account.account_type %>
+          </option>
+        <% }) %>
+      <% } %>
+    </select>
+  </div>
+
+  <div id="account-details" style="display: none;">
+    <div class="account-info-section">
+      <h2>Account Information</h2>
+      <p><strong>Name:</strong> <span id="display_firstname"></span> <span id="display_lastname"></span></p>
+      <p><strong>Email:</strong> <span id="display_email"></span></p>
+      <p><strong>Account Type:</strong> <span id="display_type"></span></p>
+    </div>
+    <hr>
+
+    <form action="/account/update-admin" method="POST">
+      <h2>Update Account Information</h2>
+      <input type="hidden" id="account_Id" name="account_Id" value="">
+      
+      <label for="account_Email">Email:</label>
+      <input type="email" id="account_Email" name="account_Email" required>
+
+      <label for="account_FirstName">First Name:</label>
+      <input type="text" id="account_FirstName" name="account_FirstName" required>
+
+      <label for="account_LastName">Last Name:</label>
+      <input type="text" id="account_LastName" name="account_LastName" required>
+
+      <button type="submit">Update Account</button>
+    </form>
+
+    <hr>
+
+    <form action="/account/update/password" method="POST">
+      <h2>Change Password</h2>
+      <input type="hidden" id="password_account_Id" name="account_Id" value="">
+      
+      <label for="account_Password">New Password:</label>
+      <input type="password" id="account_Password" name="account_Password" required>
+      <p>Password must be at least 12 characters and contain at least 1 uppercase letter, 1 number, and 1 special character.</p>
+
+      <button type="submit">Update Password</button>
+    </form>
+  </div>
+</div>

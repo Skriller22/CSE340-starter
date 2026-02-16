@@ -3,7 +3,6 @@ const pool = require("../database")
 /* ***************************
  * Register a new account
  * ************************** */
-
 async function registerAccount(account_Firstname, account_Lastname, account_Email, hashed_Password){
     try {
         const sql = "INSERT INTO account (account_firstname, account_lastname, account_email, account_password, account_type) VALUES ($1, $2, $3, $4, 'Client') RETURNING *"
@@ -68,5 +67,18 @@ async function updatePassword(account_Id, hashedPassword) {
     }
 }
 
+/* ***************************
+ * Get all accounts (admin)
+ * ************************** */
+async function getAllAccounts() {
+    try {
+        const sql = "SELECT account_id, account_firstname, account_lastname, account_email, account_type FROM account ORDER BY account_id"
+        const result = await pool.query(sql)
+        return result.rows
+    } catch (error) {
+        return error.message
+    }
+}
+
 // Export the functions - CRITICAL
-module.exports = {registerAccount, CheckExistingEmail, getAccountByEmail, updateAccount, updatePassword}
+module.exports = {registerAccount, CheckExistingEmail, getAccountByEmail, updateAccount, updatePassword, getAllAccounts}

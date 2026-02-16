@@ -224,5 +224,43 @@ async function updatePassword(req, res) {
     }
 }
 
+/* **************************
+* Build account manager page (admin only)
+* *************************** */
+async function buildAccountManager(req, res, next) {
+    let nav = await utilities.getNav()
+    const accounts = await accountModel.getAllAccounts()
+    res.render("account/manage", {
+        title: "Account Manager",
+        nav,
+        accounts,
+        errors: null,
+        manageAccountScript: true, // Flag to include the manage-accounts.js script, meant to reduce unnecessary script loading on other pages
+    })
+}
 
-module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, buildUserPage, buildUpdatePage, updateAccount, updatePassword}
+/* **************************
+* Update Account - Admin Only, prevents user redirect
+* *************************** */
+async function updateAccountAdmin(req, res) {
+    let nav = await utilities.getNav()
+    const { account_Id, account_Email, account_FirstName, account_LastName } = req.body
+
+    const updateResult = await accountModel.updateAccount(
+        account_Id,
+        account_Email,
+        account_FirstName,
+        account_LastName
+    )
+
+    if (updateResult) {
+        req.flash("notice-success", "Account information updated successfully.")
+        return res.redirect("/account/manage")
+    } else {
+        req.flash("notice", "Sorry, there was an error updating the account.")
+        res.status(501).redirect("/account/manage")
+    }
+}
+
+
+module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, buildUserPage, buildUpdatePage, updateAccount, updatePassword, buildAccountManager, updateAccountAdmin}

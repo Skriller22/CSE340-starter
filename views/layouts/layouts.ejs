@@ -14,4 +14,9 @@
         <%- include('../partials/footer') %>
     </div>
 </body>
+
+<!-- Scripts -->
+<% if (typeof manageAccountScript !== 'undefined' && manageAccountScript) { %>
+    <script src="/js/manage-accounts.js" defer></script>
+<% } %>
 </html>
